@@ -126,7 +126,7 @@
         </div>
         <div class="acciones">
           <button type="button" data-accion="editar" data-id="${esc(n.id)}">Editar</button>
-          <a class="boton" href="../nota.html?slug=${encodeURIComponent(n.slug)}" target="_blank" rel="noopener">Ver</a>
+          <a class="boton" href="nota.html?slug=${encodeURIComponent(n.slug)}" target="_blank" rel="noopener">Ver</a>
           <button type="button" class="peligro" data-accion="borrar" data-id="${esc(n.id)}" data-titulo="${esc(n.titulo)}">Borrar</button>
         </div>
       </div>`).join('');

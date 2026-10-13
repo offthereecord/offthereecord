@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel · Off The Reecord</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
+</head>
+<body>
+  <main class="admin">
+
+    <!-- ========== 1) INGRESO ========== -->
+    <section id="login" hidden>
+      <h1>Panel de Off The Reecord</h1>
+      <p class="sub">Ingresá con tu usuario de administrador.</p>
+      <form id="formLogin" class="caja">
+        <label for="email">Mail</label>
+        <input type="email" id="email" autocomplete="username" required>
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" autocomplete="current-password" required>
+        <p id="msgLogin" class="mensaje" role="status"></p>
+        <button type="submit" id="btnLogin" class="primario">Entrar</button>
+      </form>
+    </section>
+
+    <!-- ========== 2) PANEL ========== -->
+    <section id="panel" hidden>
+      <div class="barra">
+        <div>
+          <h1>Panel</h1>
+          <small id="usuario" class="sub"></small>
+        </div>
+        <div class="acciones">
+          <a class="boton" href="notas.html" target="_blank" rel="noopener">Ver el sitio</a>
+          <button type="button" id="btnSalir">Salir</button>
+        </div>
+      </div>
+
+      <p id="avisoAdmin" class="aviso" hidden>
+        Tu usuario todavía no figura como administrador, así que no vas a poder guardar notas.
+        Revisá que hayas ejecutado el comando que te agrega a la tabla «admins».
+      </p>
+
+      <!-- Lista de notas -->
+      <div id="vistaLista" hidden>
+        <div class="barra">
+          <h2 style="margin:0">Notas</h2>
+          <button type="button" id="btnNueva" class="primario">Nueva nota</button>
+        </div>
+        <div id="listaNotas" class="caja"></div>
+        <p id="msgLista" class="mensaje" role="status"></p>
+      </div>
+
+      <!-- Editor de una nota -->
+      <div id="vistaEditor" hidden>
+        <div class="barra">
+          <h2 id="tituloEditor" style="margin:0">Nueva nota</h2>
+          <button type="button" id="btnVolver">← Volver a la lista</button>
+        </div>
+
+        <form id="formNota" class="caja">
+          <label for="titulo">Título</label>
+          <input type="text" id="titulo" maxlength="200" required>
+
+          <label for="bajada">Bajada (resumen corto que va debajo del título)</label>
+          <textarea id="bajada" rows="2" maxlength="400"></textarea>
+
+          <label for="categoria">Tipo de nota</label>
+          <select id="categoria"></select>
+
+          <label for="autor">Autor/a</label>
+          <input type="text" id="autor" maxlength="120">
+
+          <label for="etiquetas">Etiquetas (separadas por coma)</label>
+          <input type="text" id="etiquetas" placeholder="rock, under, crónica">
+
+          <label for="portada">Imagen de portada</label>
+          <input type="file" id="portada" accept="image/jpeg,image/png,image/webp,image/gif">
+          <img id="miniatura" class="miniatura" alt="" hidden>
+          <button type="button" id="btnQuitarPortada" hidden style="margin-top:8px">Quitar portada</button>
+
+          <label>Texto de la nota</label>
+          <div class="editor-caja"><div id="editor"></div></div>
+
+          <label class="check"><input type="checkbox" id="publicada"> Publicada (si no, queda como borrador y solo vos la ves)</label>
+
+          <p id="msgNota" class="mensaje" role="status"></p>
+          <button type="submit" id="btnGuardar" class="primario">Guardar</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script src="config.js"></script>
+  <script src="util.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
