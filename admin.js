@@ -8,6 +8,7 @@
   let portadaUrl = '';     // dirección de la imagen de portada
   let usuarioId = null;    // para no reiniciar el panel sin necesidad
   let iniciado = false;
+  let esAdminFlag = false; // ¿el usuario logueado es administrador?
 
   /* ---------- Utilidades ---------- */
   function mensaje(el, texto, tipo) {
@@ -53,9 +54,9 @@
     });
   }
 
-  async function subirImagen(archivo) {
+  async function subirImagen(archivo, maxAncho) {
     if (!EXTENSIONES[archivo.type]) throw new Error('Formato no permitido. Usá JPG, PNG, WEBP o GIF.');
-    const file = await reducirImagen(archivo);
+    const file = await reducirImagen(archivo, maxAncho || 1600);
     const ext = EXTENSIONES[file.type] || EXTENSIONES[archivo.type];
     const ruta = new Date().getFullYear() + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
     const { error } = await sb.storage.from('imagenes').upload(ruta, file, {
@@ -78,8 +79,10 @@
 
     $('usuario').textContent = session.user.email;
     const { data } = await sb.rpc('es_admin');       // ¿está este usuario en la tabla admins?
-    $('avisoAdmin').hidden = data === true;
-    $('btnNueva').hidden = data !== true;
+    esAdminFlag = data === true;
+    $('avisoAdmin').hidden = esAdminFlag;
+    $('btnNueva').hidden = !esAdminFlag;
+    document.dispatchEvent(new CustomEvent('otr:sesion', { detail: { admin: esAdminFlag } }));
     mostrarLista();
   }
 
@@ -286,6 +289,19 @@
     try { if (registro.autor) localStorage.setItem('otr_autor', registro.autor); } catch (err) { /* sin problema */ }
     mensaje($('msgNota'), publicada ? 'Guardado y publicado ✓' : 'Guardado como borrador ✓', 'ok');
   });
+
+  /* ---------- Pestañas (Notas / Reseñas) ---------- */
+  document.querySelectorAll('[data-tab]').forEach(boton => {
+    boton.addEventListener('click', () => {
+      const tab = boton.dataset.tab;
+      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('activa', b === boton));
+      document.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.dataset.panel !== tab; });
+      document.dispatchEvent(new CustomEvent('otr:pestana', { detail: tab }));
+    });
+  });
+
+  /* Herramientas que usan también los otros archivos del panel */
+  window.OTR_ADMIN = { subirImagen, textoError, mensaje, esAdmin: () => esAdminFlag };
 
   /* ---------- Arranque ---------- */
   Object.entries(CATEGORIAS).forEach(([valor, nombre]) => {

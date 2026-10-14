@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nota · Off The Reecord</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="base.css">
+  <title>Nota · Off The Reecord</title>
 </head>
-<body>
-  <header class="sitio">
-    <a class="marca" href="index.html"><img src="logo-claro.svg" alt=""><span>Off The Reecord</span></a>
-    <nav><a href="index.html">Inicio</a><a href="notas.html">Notas</a></nav>
-  </header>
-  <article class="nota" id="nota" aria-live="polite"><p class="vacio">Cargando…</p></article>
+<body data-seccion="notas">
+  <div id="cabecera"></div>
+
+  <main>
+    <article class="nota" id="nota" aria-live="polite"><p class="vacio">Cargando…</p></article>
+  </main>
+
+  <div id="pie"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
   <script src="config.js"></script>
   <script src="util.js"></script>
+  <script src="layout.js"></script>
   <script src="nota.js"></script>
 </body>
 </html>

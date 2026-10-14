@@ -18,18 +18,5 @@
     lista.innerHTML = '<p class="vacio">Todavía no hay notas publicadas. Volvé pronto.</p>';
     return;
   }
-
-  lista.innerHTML = data.map(n => {
-    const foto = urlSegura(n.imagen_portada);
-    return `
-      <a class="tarjeta" href="nota.html?slug=${encodeURIComponent(n.slug)}">
-        ${foto ? `<img class="foto" src="${esc(foto)}" alt="" loading="lazy">` : ''}
-        <div class="cuerpo">
-          <span class="categoria">${esc(CATEGORIAS[n.categoria] || n.categoria)}</span>
-          <h2>${esc(n.titulo)}</h2>
-          ${n.bajada ? `<p>${esc(n.bajada)}</p>` : ''}
-          <span class="fecha">${esc(fechaLarga(n.fecha_publicacion))}</span>
-        </div>
-      </a>`;
-  }).join('');
+  lista.innerHTML = data.map(htmlTarjetaNota).join('');
 })();

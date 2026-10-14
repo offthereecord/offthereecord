@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Panel · Off The Reecord</title>
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
@@ -33,62 +34,121 @@
           <small id="usuario" class="sub"></small>
         </div>
         <div class="acciones">
-          <a class="boton" href="notas.html" target="_blank" rel="noopener">Ver el sitio</a>
+          <a class="boton" href="index.html" target="_blank" rel="noopener">Ver el sitio</a>
           <button type="button" id="btnSalir">Salir</button>
         </div>
       </div>
 
       <p id="avisoAdmin" class="aviso" hidden>
-        Tu usuario todavía no figura como administrador, así que no vas a poder guardar notas.
+        Tu usuario todavía no figura como administrador, así que no vas a poder guardar contenido.
         Revisá que hayas ejecutado el comando que te agrega a la tabla «admins».
       </p>
 
-      <!-- Lista de notas -->
-      <div id="vistaLista" hidden>
-        <div class="barra">
-          <h2 style="margin:0">Notas</h2>
-          <button type="button" id="btnNueva" class="primario">Nueva nota</button>
-        </div>
-        <div id="listaNotas" class="caja"></div>
-        <p id="msgLista" class="mensaje" role="status"></p>
+      <div class="pestanas">
+        <button type="button" class="activa" data-tab="notas">Notas</button>
+        <button type="button" data-tab="resenas">Reseñas música</button>
       </div>
 
-      <!-- Editor de una nota -->
-      <div id="vistaEditor" hidden>
-        <div class="barra">
-          <h2 id="tituloEditor" style="margin:0">Nueva nota</h2>
-          <button type="button" id="btnVolver">← Volver a la lista</button>
+      <!-- ===== NOTAS ===== -->
+      <div data-panel="notas">
+        <div id="vistaLista" hidden>
+          <div class="barra">
+            <h2 style="margin:0">Notas</h2>
+            <button type="button" id="btnNueva" class="primario">Nueva nota</button>
+          </div>
+          <div id="listaNotas" class="caja"></div>
+          <p id="msgLista" class="mensaje" role="status"></p>
         </div>
 
-        <form id="formNota" class="caja">
-          <label for="titulo">Título</label>
-          <input type="text" id="titulo" maxlength="200" required>
+        <div id="vistaEditor" hidden>
+          <div class="barra">
+            <h2 id="tituloEditor" style="margin:0">Nueva nota</h2>
+            <button type="button" id="btnVolver">← Volver a la lista</button>
+          </div>
 
-          <label for="bajada">Bajada (resumen corto que va debajo del título)</label>
-          <textarea id="bajada" rows="2" maxlength="400"></textarea>
+          <form id="formNota" class="caja">
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" maxlength="200" required>
 
-          <label for="categoria">Tipo de nota</label>
-          <select id="categoria"></select>
+            <label for="bajada">Bajada (resumen corto que va debajo del título)</label>
+            <textarea id="bajada" rows="2" maxlength="400"></textarea>
 
-          <label for="autor">Autor/a</label>
-          <input type="text" id="autor" maxlength="120">
+            <label for="categoria">Tipo de nota</label>
+            <select id="categoria"></select>
 
-          <label for="etiquetas">Etiquetas (separadas por coma)</label>
-          <input type="text" id="etiquetas" placeholder="rock, under, crónica">
+            <label for="autor">Autor/a</label>
+            <input type="text" id="autor" maxlength="120">
 
-          <label for="portada">Imagen de portada</label>
-          <input type="file" id="portada" accept="image/jpeg,image/png,image/webp,image/gif">
-          <img id="miniatura" class="miniatura" alt="" hidden>
-          <button type="button" id="btnQuitarPortada" hidden style="margin-top:8px">Quitar portada</button>
+            <label for="etiquetas">Etiquetas (separadas por coma)</label>
+            <input type="text" id="etiquetas" placeholder="rock, under, crónica">
 
-          <label>Texto de la nota</label>
-          <div class="editor-caja"><div id="editor"></div></div>
+            <label for="portada">Imagen de portada</label>
+            <input type="file" id="portada" accept="image/jpeg,image/png,image/webp,image/gif">
+            <img id="miniatura" class="miniatura" alt="" hidden>
+            <button type="button" id="btnQuitarPortada" hidden style="margin-top:8px">Quitar portada</button>
 
-          <label class="check"><input type="checkbox" id="publicada"> Publicada (si no, queda como borrador y solo vos la ves)</label>
+            <label>Texto de la nota</label>
+            <div class="editor-caja"><div id="editor"></div></div>
 
-          <p id="msgNota" class="mensaje" role="status"></p>
-          <button type="submit" id="btnGuardar" class="primario">Guardar</button>
-        </form>
+            <label class="check"><input type="checkbox" id="publicada"> Publicada (si no, queda como borrador y solo vos la ves)</label>
+
+            <p id="msgNota" class="mensaje" role="status"></p>
+            <button type="submit" id="btnGuardar" class="primario">Guardar</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===== RESEÑAS MÚSICA ===== -->
+      <div data-panel="resenas" hidden>
+        <div id="rsVistaLista">
+          <div class="barra">
+            <h2 style="margin:0">Reseñas música</h2>
+            <button type="button" id="btnNuevaRs" class="primario">Nueva reseña</button>
+          </div>
+          <div id="rsItems" class="caja"></div>
+          <p id="msgRsLista" class="mensaje" role="status"></p>
+        </div>
+
+        <div id="rsVistaEditor" hidden>
+          <div class="barra">
+            <h2 id="rsTituloEditor" style="margin:0">Nueva reseña</h2>
+            <button type="button" id="btnRsVolver">← Volver a la lista</button>
+          </div>
+
+          <form id="formRs" class="caja">
+            <label for="rsTitulo">Disco, single o playlist</label>
+            <input type="text" id="rsTitulo" maxlength="200" required>
+
+            <label for="rsArtista">Artista</label>
+            <input type="text" id="rsArtista" maxlength="200" required>
+
+            <label for="rsResumen">Resumen (opcional, una o dos líneas)</label>
+            <textarea id="rsResumen" rows="2" maxlength="400"></textarea>
+
+            <label for="rsTapa">Tapa (imagen cuadrada, idealmente)</label>
+            <input type="file" id="rsTapa" accept="image/jpeg,image/png,image/webp,image/gif">
+            <img id="rsMiniatura" class="miniatura" alt="" hidden>
+            <button type="button" id="btnRsQuitarTapa" hidden style="margin-top:8px">Quitar tapa</button>
+
+            <label for="rsEnlace">Link a la playlist o al disco (YouTube Music, Spotify, etc.)</label>
+            <input type="text" id="rsEnlace" placeholder="https://music.youtube.com/playlist?list=...">
+
+            <label for="rsNota">Nota con la reseña escrita (opcional)</label>
+            <select id="rsNota"></select>
+
+            <div class="fila-campos">
+              <div>
+                <label for="rsOrden">Orden (el número más bajo aparece primero)</label>
+                <input type="number" id="rsOrden" value="0" min="0" max="9999">
+              </div>
+            </div>
+
+            <label class="check"><input type="checkbox" id="rsPublicada" checked> Visible en el sitio</label>
+
+            <p id="msgRs" class="mensaje" role="status"></p>
+            <button type="submit" id="btnRsGuardar" class="primario">Guardar</button>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -99,5 +159,6 @@
   <script src="config.js"></script>
   <script src="util.js"></script>
   <script src="admin.js"></script>
+  <script src="admin-resenas.js"></script>
 </body>
 </html>
