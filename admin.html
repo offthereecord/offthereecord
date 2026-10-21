@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Panel · Off The Reecord</title>
-  <link rel="stylesheet" href="base.css?v=5">
+  <link rel="stylesheet" href="base.css?v=6">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
 </head>
 <body class="panel-admin">
@@ -47,6 +47,7 @@
       <div class="pestanas">
         <button type="button" class="activa" data-tab="notas">Notas</button>
         <button type="button" data-tab="resenas">Reseñas música</button>
+        <button type="button" data-tab="efemerides">Efemérides</button>
       </div>
 
       <!-- ===== NOTAS ===== -->
@@ -79,7 +80,7 @@
             <label for="autor">Autor/a</label>
             <input type="text" id="autor" maxlength="120">
 
-            <label for="etiquetas">Etiquetas (separadas por coma)</label>
+            <label for="etiquetas">Etiquetas (separadas por coma). Poné «emergentes» para que la nota aparezca en la sección Emergentes</label>
             <input type="text" id="etiquetas" placeholder="rock, under, crónica">
 
             <label for="portada">Imagen de portada</label>
@@ -150,15 +151,76 @@
           </form>
         </div>
       </div>
+
+      <!-- ===== EFEMÉRIDES ===== -->
+      <div data-panel="efemerides" hidden>
+        <div id="efVistaLista">
+          <div class="barra">
+            <h2 style="margin:0">Efemérides</h2>
+            <button type="button" id="btnNuevaEf" class="primario">Nueva efeméride</button>
+          </div>
+          <div id="efItems" class="caja"></div>
+          <p id="msgEfLista" class="mensaje" role="status"></p>
+        </div>
+
+        <div id="efVistaEditor" hidden>
+          <div class="barra">
+            <h2 id="efTituloEditor" style="margin:0">Nueva efeméride</h2>
+            <button type="button" id="btnEfVolver">← Volver a la lista</button>
+          </div>
+
+          <form id="formEf" class="caja">
+            <div class="fila-campos">
+              <div>
+                <label for="efDia">Día</label>
+                <input type="number" id="efDia" min="1" max="31" required>
+              </div>
+              <div>
+                <label for="efMes">Mes</label>
+                <select id="efMes" required></select>
+              </div>
+            </div>
+
+            <label for="efAnio">Año en que ocurrió (opcional)</label>
+            <input type="number" id="efAnio" min="1000" max="2100" placeholder="1991">
+
+            <label for="efTitulo">Título</label>
+            <input type="text" id="efTitulo" maxlength="200" required>
+
+            <label for="efDescripcion">Descripción</label>
+            <textarea id="efDescripcion" rows="5" maxlength="1500"></textarea>
+
+            <label for="efAmbito">Ámbito</label>
+            <select id="efAmbito">
+              <option value="nacional">Nacional</option>
+              <option value="internacional">Internacional</option>
+            </select>
+
+            <label for="efImagen">Imagen (opcional)</label>
+            <input type="file" id="efImagen" accept="image/jpeg,image/png,image/webp,image/gif">
+            <img id="efMiniatura" class="miniatura" alt="" hidden>
+            <button type="button" id="btnEfQuitarImagen" hidden style="margin-top:8px">Quitar imagen</button>
+
+            <label for="efNota">Nota relacionada (opcional)</label>
+            <select id="efNota"></select>
+
+            <label class="check"><input type="checkbox" id="efPublicada" checked> Visible en el sitio</label>
+
+            <p id="msgEf" class="mensaje" role="status"></p>
+            <button type="submit" id="btnEfGuardar" class="primario">Guardar</button>
+          </form>
+        </div>
+      </div>
     </section>
 
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-  <script src="config.js?v=5"></script>
-  <script src="util.js?v=5"></script>
-  <script src="admin.js?v=5"></script>
-  <script src="admin-resenas.js?v=5"></script>
+  <script src="config.js?v=6"></script>
+  <script src="util.js?v=6"></script>
+  <script src="admin.js?v=6"></script>
+  <script src="admin-resenas.js?v=6"></script>
+  <script src="admin-efemerides.js?v=6"></script>
 </body>
 </html>

@@ -266,7 +266,7 @@
       bajada: $('bajada').value.trim() || null,
       categoria: $('categoria').value,
       autor: $('autor').value.trim() || null,
-      etiquetas: $('etiquetas').value.split(',').map(t => t.trim()).filter(Boolean),
+      etiquetas: $('etiquetas').value.split(',').map(t => t.trim().toLowerCase()).filter(Boolean),
       imagen_portada: portadaUrl || null,
       contenido: sinTexto ? '' : quill.root.innerHTML,
       publicada

@@ -11,7 +11,7 @@ window.OTR_CONFIG = {
      (por ejemplo 'https://www.instagram.com/tu_usuario').
      Si dejás unas comillas vacías '', esa red NO se muestra. */
   REDES: {
-    instagram: '',
+    instagram: 'https://www.instagram.com/offthereecord__',
     tiktok: '',
     youtube: '',
     x: '',
@@ -19,7 +19,11 @@ window.OTR_CONFIG = {
     spotify: '',
     whatsapp: ''     // ejemplo: 'https://wa.me/5491112345678'
   },
+  /* Link de la playlist en YouTube Music (se abre en otra pestaña).
+     Mientras esté vacío, la opción "Playlist" no aparece en el menú. */
+  PLAYLIST_URL: 'https://music.youtube.com/playlist?list=PLVpOCSlWmb5c',
+
   CONTACTO: {
-    email: ''        // ejemplo: 'hola@tudominio.com'
+    email: 'offthereecord@gmail.com'
   }
 };
