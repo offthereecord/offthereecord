@@ -18,7 +18,7 @@
     cab.outerHTML = `
       <header class="barra-sitio" id="barraSitio">
         <div class="barra-in">
-          <a class="marca" href="index.html"><img src="logo-simple.svg" alt=""><span>Off The Reecord</span></a>
+          <a class="marca" href="index.html"><img src="logo-simple.svg" alt="" width="38" height="38"><span>Off The Reecord</span></a>
           <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPrincipal" aria-label="Abrir el menú">
             <span></span><span></span><span></span>
           </button>
@@ -57,7 +57,7 @@
       <footer class="pie-sitio">
         <div class="pie-in">
           <div class="pie-marca">
-            <img src="logo-simple.svg" alt="">
+            <img src="logo-simple.svg" alt="" width="44" height="44">
             <div><strong>Off The Reecord</strong><span>Rock under argentino, crónicas y reseñas.</span></div>
           </div>
           ${redes.length ? `

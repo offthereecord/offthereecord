@@ -236,3 +236,69 @@ button:disabled { opacity: .5; cursor: wait; }
 .editor-caja .ql-toolbar { border: 0; border-bottom: 1px solid #ddd; }
 .editor-caja .ql-container { border: 0; font-size: 1.05rem; }
 #editor { min-height: 320px; }
+
+/* ============================================================
+   TIPOGRAFÍA
+   Títulos: estilo pincel (Caveat Brush) · Subtítulos: Bebas Neue · Cuerpo: Oswald
+   Los tres archivos de fuentes están en la misma carpeta (.woff2).
+   Para cambiar una fuente, se cambia solo la variable de abajo.
+   ============================================================ */
+@font-face { font-family: 'OTR Titulos'; src: url('fuente-titulos.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Bebas Neue';  src: url('bebas-neue.woff2') format('woff2');     font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Oswald';      src: url('oswald.woff2') format('woff2');         font-weight: 200 700; font-display: swap; }
+
+:root {
+  --f-titulos: 'OTR Titulos', 'Bebas Neue', Impact, sans-serif;
+  --f-sub: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+  --f-cuerpo: 'Oswald', 'Arial Narrow', system-ui, sans-serif;
+}
+
+body { font-family: var(--f-cuerpo); font-weight: 400; letter-spacing: .01em; }
+
+/* ---- Títulos grandes: estilo pincel ---- */
+.marca span, .contenedor h1, .destacada h1, .nota h1, .intro h1 {
+  font-family: var(--f-titulos); font-weight: 400; text-transform: uppercase;
+  letter-spacing: .03em; line-height: 1.02;
+  -webkit-text-stroke: .6px currentColor;   /* le da un poco más de cuerpo al trazo de pincel */
+}
+.marca { font-weight: 400; }
+.marca span { font-size: 1.55rem; line-height: 1; white-space: nowrap; }
+.contenedor h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); }
+.destacada h1  { font-size: clamp(2.5rem, 6.5vw, 4.2rem); }
+.nota h1       { font-size: clamp(2.5rem, 8vw, 4rem); }
+.intro h1      { font-size: clamp(2.6rem, 8vw, 4rem); }
+
+/* ---- Subtítulos y etiquetas: Bebas Neue ---- */
+h2, h3, .tarjeta h2, .seccion-cab h2, .nota .contenido h2, .nota .contenido h3,
+.pie-in h2, .categoria, .menu a, .boton {
+  font-family: var(--f-sub); font-weight: 400; letter-spacing: .05em;
+}
+.seccion-cab h2 { font-size: 2.1rem; line-height: 1.1; }
+.seccion-cab a { font-family: var(--f-cuerpo); }
+.tarjeta h2 { font-size: 1.75rem; line-height: 1.08; letter-spacing: .03em; }
+.nota .contenido h2 { font-size: 2.1rem; }
+.nota .contenido h3 { font-size: 1.7rem; }
+.categoria { font-size: 1.05rem; letter-spacing: .12em; }
+.menu a { font-size: 1.25rem; letter-spacing: .08em; text-transform: uppercase; }
+.boton { font-size: 1.15rem; letter-spacing: .08em; text-transform: uppercase; }
+.pie-in h2 { font-size: 1.15rem; letter-spacing: .14em; }
+
+/* ---- Cuerpo: Oswald ---- */
+.nota .contenido, .nota .bajada, .destacada .bajada, .tarjeta p, .sub, .intro p {
+  font-family: var(--f-cuerpo); font-weight: 300; letter-spacing: .015em;
+}
+.nota .contenido { font-size: 1.2rem; line-height: 1.8; }
+.nota .bajada { font-size: 1.35rem; }
+.destacada .bajada { font-size: 1.25rem; }
+.tarjeta p { font-size: 1.02rem; }
+.resena strong { font-weight: 500; }
+
+/* ---- El panel de administración conserva una letra simple y clara ---- */
+.panel-admin, .panel-admin h1, .panel-admin h2, .panel-admin h3,
+.panel-admin .boton, .panel-admin .estado, .panel-admin .categoria {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-transform: none; letter-spacing: normal; -webkit-text-stroke: 0; font-weight: 400;
+}
+.panel-admin h1 { font-size: 1.7rem; font-weight: 700; }
+.panel-admin h2 { font-size: 1.4rem; font-weight: 700; }
+.panel-admin .boton { font-size: 1rem; }

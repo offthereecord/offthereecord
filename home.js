@@ -24,7 +24,7 @@
   } else if (!notas.data.length) {
     destacada.innerHTML = `
       <div class="intro">
-        <img src="logo-claro.svg" alt="">
+        <img src="logo-claro.svg" alt="" width="150" height="150">
         <h1>Off The Reecord</h1>
         <p>Rock under argentino, efemérides y crónicas de recitales. Muy pronto.</p>
       </div>`;
