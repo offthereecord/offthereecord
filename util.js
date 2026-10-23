@@ -64,3 +64,22 @@ function htmlResena(r) {
   if (!destino) return `<div class="resena">${cuerpo}</div>`;
   return `<a class="resena" href="${esc(destino.href)}"${destino.externo ? ' target="_blank" rel="noopener noreferrer"' : ''}>${cuerpo}</a>`;
 }
+
+/* ---------- Fechas (para las efemérides) ---------- */
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+/* Fecha de hoy según la hora de Argentina, sin importar dónde esté quien visita */
+function hoyArgentina() {
+  const partes = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Argentina/Buenos_Aires', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).formatToParts(new Date());
+  const n = tipo => Number(partes.find(p => p.type === tipo).value);
+  return { anio: n('year'), mes: n('month'), dia: n('day') };
+}
+
+/* Días que faltan (positivo) o pasaron (negativo) hasta el día/mes de este año */
+function diasHasta(mes, dia, hoy) {
+  const h = Date.UTC(hoy.anio, hoy.mes - 1, hoy.dia);
+  const f = Date.UTC(hoy.anio, mes - 1, dia);
+  return Math.round((f - h) / 86400000);
+}

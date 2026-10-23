@@ -3,14 +3,19 @@
    Se arman acá UNA sola vez y aparecen en todas las páginas.
    Para sumar una sección nueva al menú, se agrega una línea en SECCIONES. */
 (function () {
+  const cfg = window.OTR_CONFIG || {};
   const SECCIONES = [
-    { clave: 'inicio',  href: 'index.html',   texto: 'Inicio' },
-    { clave: 'notas',   href: 'notas.html',   texto: 'Notas' },
-    { clave: 'resenas', href: 'resenas.html', texto: 'Reseñas' }
-  ];
+    { clave: 'inicio',      href: 'index.html',      texto: 'Inicio' },
+    { clave: 'notas',       href: 'notas.html',      texto: 'Notas' },
+    { clave: 'resenas',     href: 'resenas.html',    texto: 'Reseñas' },
+    { clave: 'emergentes',  href: 'emergentes.html', texto: 'Emergentes' },
+    { clave: 'efemerides',  href: 'efemerides.html', texto: 'Efemérides' },
+    { clave: 'playlist',    href: urlSegura(cfg.PLAYLIST_URL), texto: 'Playlist', externo: true },   // YouTube Music
+    { clave: 'quien-soy',   href: 'quien-soy.html',  texto: 'Quién soy' },
+    { clave: 'contacto',    href: 'contacto.html',   texto: 'Contacto' }
+  ].filter(s => s.href);   // si no hay link de playlist, esa opción no se muestra
   const REDES = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube', x: 'X', facebook: 'Facebook', spotify: 'Spotify', whatsapp: 'WhatsApp' };
   const actual = document.body.dataset.seccion || '';
-  const cfg = window.OTR_CONFIG || {};
 
   /* ---------- Barra de navegación ---------- */
   const cab = document.getElementById('cabecera');
@@ -23,7 +28,7 @@
             <span></span><span></span><span></span>
           </button>
           <nav class="menu" id="menuPrincipal" aria-label="Secciones del sitio">
-            ${SECCIONES.map(s => `<a href="${s.href}"${s.clave === actual ? ' aria-current="page"' : ''}>${s.texto}</a>`).join('')}
+            ${SECCIONES.map(s => `<a href="${esc(s.href)}"${s.externo ? ' target="_blank" rel="noopener noreferrer"' : ''}${s.clave === actual ? ' aria-current="page"' : ''}>${s.texto}${s.externo ? ' ↗' : ''}</a>`).join('')}
           </nav>
         </div>
       </header>`;
