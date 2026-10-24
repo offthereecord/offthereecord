@@ -51,3 +51,19 @@ dialog.efem-popup::backdrop { background: rgba(0, 0, 0, .78); }
 .efem-fecha-grande { margin: 2px 0 14px; font-family: var(--f-titulos); font-size: clamp(2.2rem, 9vw, 3.2rem); line-height: 1.02; text-transform: uppercase; }
 .efem-item + .efem-item { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--borde); }
 .efem-pie { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* ---------- Calendario de un solo mes ---------- */
+.efem-columna { max-width: 720px; margin: 0 auto; }
+.hoy-texto { margin: 0 0 6px; font-family: var(--f-sub); font-size: 1.25rem; letter-spacing: .1em; text-transform: uppercase; color: var(--texto-suave); }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 14px 0 6px; }
+.cal-titulo { flex: 1; margin: 0; text-align: center; font-family: var(--f-titulos); font-size: clamp(2.1rem, 7vw, 3rem); line-height: 1; text-transform: uppercase; letter-spacing: .03em; }
+.cal-flecha { flex: none; width: 48px; height: 48px; padding: 0; border-radius: 50%; font-size: 1.7rem; line-height: 1; }
+.cal-flecha:disabled { opacity: .25; cursor: default; }
+.cal-acciones { min-height: 40px; display: flex; justify-content: center; align-items: center; margin-bottom: 6px; }
+.calendario-uno .mes { padding: 18px 18px 16px; }
+.calendario-uno .cal { gap: 6px; }
+.calendario-uno .cal .dia, .calendario-uno .cal .vacia { font-size: 1.15rem; border-radius: 10px; }
+.calendario-uno .cal .dow { font-size: .8rem; padding-bottom: 6px; }
+.calendario-uno .cal button.marcado::before, .calendario-uno .cal button.marcado::after { width: 7px; height: 7px; margin-left: -3.5px; bottom: 5px; }
+.calendario-uno .cal button.nac.int::before { margin-left: -9px; }
+.calendario-uno .cal button.nac.int::after { margin-left: 2px; }
