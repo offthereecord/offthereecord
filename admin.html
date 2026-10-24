@@ -181,19 +181,10 @@
               </div>
             </div>
 
-            <label for="efAnio">Año en que ocurrió o nació (necesario para que la página haga la cuenta de años)</label>
+            <label for="efAnio">Año en que ocurrió (opcional)</label>
             <input type="number" id="efAnio" min="1000" max="2100" placeholder="1991">
 
-            <label for="efTipo">Tipo de efeméride</label>
-            <select id="efTipo">
-              <option value="cumpleanos">Cumpleaños (muestra la edad)</option>
-              <option value="lanzamiento">Lanzamiento de un disco o canción</option>
-              <option value="formacion">Formación de una banda</option>
-              <option value="fallecimiento">Fallecimiento</option>
-              <option value="otro">Otro hecho</option>
-            </select>
-
-            <label for="efTitulo">Título (ej.: Cumpleaños de Charly García)</label>
+            <label for="efTitulo">Título</label>
             <input type="text" id="efTitulo" maxlength="200" required>
 
             <label for="efDescripcion">Descripción</label>
@@ -230,6 +221,6 @@
   <script src="util.js?v=6"></script>
   <script src="admin.js?v=6"></script>
   <script src="admin-resenas.js?v=6"></script>
-  <script src="admin-efemerides.js?v=7"></script>
+  <script src="admin-efemerides.js?v=6"></script>
 </body>
 </html>
