@@ -1,0 +1,53 @@
+/* Estilos de las efemérides: calendario y ventana emergente.
+   Los colores del calendario se cambian acá: */
+:root { --cal-nac: #7aa7ff; --cal-int: #ffb454; }
+
+/* ---------- Calendario ---------- */
+.leyenda { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin: 4px 0 6px; color: var(--texto-suave); font-size: .95rem; }
+.leyenda i { display: inline-block; width: 11px; height: 11px; margin-right: 7px; border-radius: 50%; vertical-align: -1px; }
+.anio-cal { font-family: var(--f-titulos); text-transform: uppercase; font-size: 2.6rem; margin: 18px 0 12px; line-height: 1; }
+.calendario { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 22px 20px; }
+.mes { padding: 14px 14px 12px; border: 1px solid var(--borde); border-radius: 12px; background: var(--superficie); }
+.mes h3 { margin: 0 0 8px; font-size: 1.8rem; line-height: 1; text-transform: capitalize; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+.cal .dow { padding-bottom: 3px; font-size: .72rem; letter-spacing: .08em; color: var(--texto-suave); }
+.cal .dia, .cal .vacia { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 1; border-radius: 8px; font-size: .92rem; color: var(--texto-suave); }
+.cal .dia.hoy { outline: 1.5px solid var(--texto); outline-offset: -1px; color: var(--texto); }
+.cal button.marcado {
+  padding: 0; font: inherit; font-weight: 500; color: var(--texto); background: var(--fondo);
+  border: 1px solid var(--borde); cursor: pointer; transition: transform .12s, border-color .12s;
+}
+.cal button.marcado:hover, .cal button.marcado:focus-visible { transform: translateY(-2px); border-color: var(--texto); }
+.cal button.nac { border-color: var(--cal-nac); }
+.cal button.int { border-color: var(--cal-int); }
+.cal button.marcado::before, .cal button.marcado::after {
+  content: ""; position: absolute; bottom: 3px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%;
+}
+.cal button.nac::after { background: var(--cal-nac); }
+.cal button.int::before { background: var(--cal-int); }
+.cal button.nac.int::before { margin-left: -8px; }
+.cal button.nac.int::after { margin-left: 2px; }
+
+.efem-cuando { display: block; margin-bottom: 2px; font-family: var(--f-sub); letter-spacing: .1em; text-transform: uppercase; color: var(--cal-nac); }
+.efem.hoy .efem-cuando { color: var(--texto); }
+
+/* ---------- Una efeméride (lista y ventana) ---------- */
+.efem-item h3 { margin: 4px 0; font-size: 1.8rem; line-height: 1.08; }
+.efem-item p { margin: 0 0 6px; }
+.efem-linea { font-weight: 400; color: var(--texto); }
+.efem-item img { display: block; max-width: min(420px, 100%); margin: 8px 0; border-radius: 8px; }
+.efem-item a.mas { font-family: var(--f-sub); letter-spacing: .08em; text-transform: uppercase; }
+.efem .efem-item h3 { font-size: 1.7rem; }
+
+/* ---------- Ventana emergente ---------- */
+dialog.efem-popup {
+  width: min(92vw, 560px); max-height: 88vh; padding: 0; overflow: auto;
+  color: var(--texto); background: var(--superficie); border: 1px solid var(--texto-suave); border-radius: 16px;
+}
+dialog.efem-popup::backdrop { background: rgba(0, 0, 0, .78); }
+.efem-cuerpo { position: relative; padding: 26px 24px 22px; }
+.efem-cerrar { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; font-size: 1.1rem; }
+.efem-etiqueta { margin: 0; font-family: var(--f-sub); font-size: 1.15rem; letter-spacing: .16em; text-transform: uppercase; color: var(--texto-suave); }
+.efem-fecha-grande { margin: 2px 0 14px; font-family: var(--f-titulos); font-size: clamp(2.2rem, 9vw, 3.2rem); line-height: 1.02; text-transform: uppercase; }
+.efem-item + .efem-item { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--borde); }
+.efem-pie { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 20px; }

@@ -79,4 +79,25 @@
         </div>
       </footer>`;
   }
+
+  /* ---------- Efemérides: estilos, piezas comunes y cartel del día ---------- */
+  const V = '?v=7';
+  if (!document.querySelector('link[href^="efem.css"]')) {
+    const l = document.createElement('link');
+    l.rel = 'stylesheet'; l.href = 'efem.css' + V;
+    document.head.appendChild(l);
+  }
+  function cargarScript(src) {
+    return new Promise((ok, fallo) => {
+      const s = document.createElement('script');
+      s.src = src + V; s.onload = ok; s.onerror = fallo;
+      document.body.appendChild(s);
+    });
+  }
+  (async () => {
+    try {
+      if (typeof abrirDialogoEfemerides !== 'function') await cargarScript('efem-comun.js');
+      await cargarScript('efemerides-popup.js');
+    } catch (e) { console.error('No se pudo cargar el cartel de efemérides', e); }
+  })();
 })();

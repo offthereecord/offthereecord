@@ -48,21 +48,21 @@ img { max-width: 100%; height: auto; }
 .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; letter-spacing: .02em; color: var(--texto); }
 .marca img { width: 38px; height: 38px; }
 
-.menu { display: flex; gap: 6px; }
+.menu { display: flex; gap: 2px; }
 .menu a {
-  position: relative; padding: 8px 11px; border-radius: 8px;
+  position: relative; padding: 8px 9px; border-radius: 8px; white-space: nowrap;
   text-decoration: none; color: var(--texto-suave);
   transition: color .15s, background .15s;
 }
 .menu a:hover, .menu a:focus-visible { color: var(--texto); background: var(--borde); }
 .menu a[aria-current="page"] { color: var(--texto); }
 .menu a[aria-current="page"]::after {
-  content: ""; position: absolute; left: 11px; right: 11px; bottom: 3px;
+  content: ""; position: absolute; left: 9px; right: 9px; bottom: 3px;
   height: 2px; border-radius: 2px; background: var(--acento);
 }
 .menu-btn { display: none; }
 
-@media (max-width: 980px) {
+@media (max-width: 1120px) {
   .menu-btn {
     display: flex; flex-direction: column; justify-content: center; gap: 5px;
     width: 44px; height: 44px; padding: 0 11px; border-radius: 10px;
