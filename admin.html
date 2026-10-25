@@ -46,8 +46,9 @@
 
       <div class="pestanas">
         <button type="button" class="activa" data-tab="notas">Notas</button>
-        <button type="button" data-tab="resenas">Reseñas música</button>
+        <button type="button" data-tab="coberturas">Coberturas</button>
         <button type="button" data-tab="efemerides">Efemérides</button>
+        <button type="button" data-tab="perfil">Quién soy</button>
       </div>
 
       <!-- ===== NOTAS ===== -->
@@ -99,55 +100,59 @@
         </div>
       </div>
 
-      <!-- ===== RESEÑAS MÚSICA ===== -->
-      <div data-panel="resenas" hidden>
-        <div id="rsVistaLista">
+      <!-- ===== COBERTURAS ===== -->
+      <div data-panel="coberturas" hidden>
+        <div id="cbVistaLista">
           <div class="barra">
-            <h2 style="margin:0">Reseñas música</h2>
-            <button type="button" id="btnNuevaRs" class="primario">Nueva reseña</button>
+            <h2 style="margin:0">Coberturas</h2>
+            <button type="button" id="btnNuevaCb" class="primario">Nueva cobertura</button>
           </div>
-          <div id="rsItems" class="caja"></div>
-          <p id="msgRsLista" class="mensaje" role="status"></p>
+          <div id="cbItems" class="caja"></div>
+          <p id="msgCbLista" class="mensaje" role="status"></p>
         </div>
 
-        <div id="rsVistaEditor" hidden>
+        <div id="cbVistaEditor" hidden>
           <div class="barra">
-            <h2 id="rsTituloEditor" style="margin:0">Nueva reseña</h2>
-            <button type="button" id="btnRsVolver">← Volver a la lista</button>
+            <h2 id="cbTituloEditor" style="margin:0">Nueva cobertura</h2>
+            <button type="button" id="btnCbVolver">← Volver a la lista</button>
           </div>
 
-          <form id="formRs" class="caja">
-            <label for="rsTitulo">Disco, single o playlist</label>
-            <input type="text" id="rsTitulo" maxlength="200" required>
+          <form id="formCb" class="caja">
+            <label for="cbTitulo">Título (ej.: La Renga en Obras)</label>
+            <input type="text" id="cbTitulo" maxlength="200" required>
 
-            <label for="rsArtista">Artista</label>
-            <input type="text" id="rsArtista" maxlength="200" required>
-
-            <label for="rsResumen">Resumen (opcional, una o dos líneas)</label>
-            <textarea id="rsResumen" rows="2" maxlength="400"></textarea>
-
-            <label for="rsTapa">Tapa (imagen cuadrada, idealmente)</label>
-            <input type="file" id="rsTapa" accept="image/jpeg,image/png,image/webp,image/gif">
-            <img id="rsMiniatura" class="miniatura" alt="" hidden>
-            <button type="button" id="btnRsQuitarTapa" hidden style="margin-top:8px">Quitar tapa</button>
-
-            <label for="rsEnlace">Link a la playlist o al disco (YouTube Music, Spotify, etc.)</label>
-            <input type="text" id="rsEnlace" placeholder="https://music.youtube.com/playlist?list=...">
-
-            <label for="rsNota">Nota con la reseña escrita (opcional)</label>
-            <select id="rsNota"></select>
+            <label for="cbArtista">Banda o artista</label>
+            <input type="text" id="cbArtista" maxlength="200">
 
             <div class="fila-campos">
               <div>
-                <label for="rsOrden">Orden (el número más bajo aparece primero)</label>
-                <input type="number" id="rsOrden" value="0" min="0" max="9999">
+                <label for="cbLugar">Lugar</label>
+                <input type="text" id="cbLugar" maxlength="200" placeholder="Estadio Obras">
+              </div>
+              <div>
+                <label for="cbFecha">Fecha del recital</label>
+                <input type="date" id="cbFecha">
               </div>
             </div>
 
-            <label class="check"><input type="checkbox" id="rsPublicada" checked> Visible en el sitio</label>
+            <label for="cbDescripcion">Texto breve (opcional)</label>
+            <textarea id="cbDescripcion" rows="4" maxlength="2000"></textarea>
 
-            <p id="msgRs" class="mensaje" role="status"></p>
-            <button type="submit" id="btnRsGuardar" class="primario">Guardar</button>
+            <label for="cbCredito">Crédito de las fotos</label>
+            <input type="text" id="cbCredito" maxlength="120">
+
+            <label for="cbSubir">Fotos (podés elegir varias a la vez)</label>
+            <input type="file" id="cbSubir" accept="image/jpeg,image/png,image/webp" multiple>
+            <p id="cbCantidad" class="sub" style="margin:8px 0 0"></p>
+            <div id="cbFotos" class="fotos-adm"></div>
+
+            <label for="cbNota">Crónica escrita relacionada (opcional)</label>
+            <select id="cbNota"></select>
+
+            <label class="check"><input type="checkbox" id="cbPublicada" checked> Visible en el sitio</label>
+
+            <p id="msgCb" class="mensaje" role="status"></p>
+            <button type="submit" id="btnCbGuardar" class="primario">Guardar</button>
           </form>
         </div>
       </div>
@@ -181,10 +186,19 @@
               </div>
             </div>
 
-            <label for="efAnio">Año en que ocurrió (opcional)</label>
+            <label for="efAnio">Año en que ocurrió o nació (necesario para que la página haga la cuenta de años)</label>
             <input type="number" id="efAnio" min="1000" max="2100" placeholder="1991">
 
-            <label for="efTitulo">Título</label>
+            <label for="efTipo">Tipo de efeméride</label>
+            <select id="efTipo">
+              <option value="cumpleanos">Cumpleaños (muestra la edad)</option>
+              <option value="lanzamiento">Lanzamiento de un disco o canción</option>
+              <option value="formacion">Formación de una banda</option>
+              <option value="fallecimiento">Fallecimiento</option>
+              <option value="otro">Otro hecho</option>
+            </select>
+
+            <label for="efTitulo">Título (ej.: Cumpleaños de Charly García)</label>
             <input type="text" id="efTitulo" maxlength="200" required>
 
             <label for="efDescripcion">Descripción</label>
@@ -211,6 +225,32 @@
           </form>
         </div>
       </div>
+
+      <!-- ===== QUIÉN SOY ===== -->
+      <div data-panel="perfil" hidden>
+        <div class="barra"><h2 style="margin:0">Quién soy</h2></div>
+        <form id="formPerfil" class="caja">
+          <label for="pfNombre">Tu nombre (como querés que aparezca)</label>
+          <input type="text" id="pfNombre" maxlength="120">
+
+          <label for="pfSubtitulo">Qué hacés, en una línea (ej.: Fotoperiodista y estudiante de Periodismo)</label>
+          <input type="text" id="pfSubtitulo" maxlength="160">
+
+          <label for="pfFotoArchivo">Tu foto</label>
+          <input type="file" id="pfFotoArchivo" accept="image/jpeg,image/png,image/webp">
+          <img id="pfMiniatura" class="miniatura" alt="" hidden>
+          <button type="button" id="btnPfQuitarFoto" hidden style="margin-top:8px">Quitar foto</button>
+
+          <label for="pfTexto">Tu texto de presentación (dejá una línea en blanco entre párrafos)</label>
+          <textarea id="pfTexto" rows="12" maxlength="6000"></textarea>
+
+          <p id="msgPf" class="mensaje" role="status"></p>
+          <div class="acciones">
+            <button type="submit" id="btnPfGuardar" class="primario">Guardar</button>
+            <a class="boton" href="quien-soy.html" target="_blank" rel="noopener">Ver la página</a>
+          </div>
+        </form>
+      </div>
     </section>
 
   </main>
@@ -220,7 +260,8 @@
   <script src="config.js?v=6"></script>
   <script src="util.js?v=6"></script>
   <script src="admin.js?v=6"></script>
-  <script src="admin-resenas.js?v=6"></script>
-  <script src="admin-efemerides.js?v=6"></script>
+  <script src="admin-coberturas.js?v=9"></script>
+  <script src="admin-efemerides.js?v=7"></script>
+  <script src="admin-perfil.js?v=9"></script>
 </body>
 </html>

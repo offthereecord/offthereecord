@@ -1,18 +1,18 @@
 'use strict';
-/* Portada: última nota publicada, reseñas música y más notas */
+/* Portada: última nota publicada, coberturas y más notas */
 (async function () {
   const destacada = document.getElementById('destacada');
 
-  const [notas, resenas] = await Promise.all([
+  const [notas, cobs] = await Promise.all([
     sb.from('notas')
       .select('titulo, slug, bajada, imagen_portada, categoria, fecha_publicacion')
       .eq('publicada', true)
       .order('fecha_publicacion', { ascending: false })
       .limit(4),
-    sb.from('resenas')
-      .select('titulo, artista, imagen, enlace_url, notas(slug)')
+    sb.from('coberturas')
+      .select('id, titulo, artista, lugar, fecha_evento, portada')
       .eq('publicada', true)
-      .order('orden', { ascending: true })
+      .order('fecha_evento', { ascending: false, nullsFirst: false })
       .order('creada_en', { ascending: false })
       .limit(12)
   ]);
@@ -44,17 +44,17 @@
       </a>`;
   }
 
-  /* ---------- 2) Reseñas música (si hay) ---------- */
-  if (!resenas.error && resenas.data && resenas.data.length) {
-    document.getElementById('carruselResenas').innerHTML = `
-      <div class="carrusel" role="region" aria-roledescription="carrusel" aria-label="Reseñas música">
+  /* ---------- 2) Coberturas (si hay) ---------- */
+  if (!cobs.error && cobs.data && cobs.data.length) {
+    document.getElementById('carruselCoberturas').innerHTML = `
+      <div class="carrusel" role="region" aria-roledescription="carrusel" aria-label="Coberturas">
         <button type="button" class="car-flecha prev" aria-label="Anteriores">‹</button>
-        <div class="pista">${resenas.data.map(htmlResena).join('')}</div>
+        <div class="pista">${cobs.data.map(htmlCobertura).join('')}</div>
         <button type="button" class="car-flecha next" aria-label="Siguientes">›</button>
         <div class="car-puntos"></div>
       </div>`;
-    document.getElementById('seccionResenas').hidden = false;
-    montarCarrusel(document.querySelector('#carruselResenas .carrusel'));
+    document.getElementById('seccionCoberturas').hidden = false;
+    montarCarrusel(document.querySelector('#carruselCoberturas .carrusel'));
   }
 
   /* ---------- 3) Más notas (si hay) ---------- */

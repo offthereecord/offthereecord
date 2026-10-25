@@ -7,6 +7,8 @@
   let actual = null;    // efeméride que se está editando (null = nueva)
   let imagenUrl = '';
 
+  const TIPOS = { cumpleanos: 'Cumpleaños', lanzamiento: 'Lanzamiento', formacion: 'Formación', fallecimiento: 'Fallecimiento', otro: 'Otro hecho' };
+
   MESES.forEach((m, i) => $('efMes').add(new Option(m.charAt(0).toUpperCase() + m.slice(1), i + 1)));
 
   function mostrarImagen() {
@@ -24,9 +26,10 @@
     const cont = $('efItems');
     cont.innerHTML = '<p class="vacio">Cargando…</p>';
 
-    const { data, error } = await sb.from('efemerides')
-      .select('id, dia, mes, anio, titulo, ambito, publicada')
+    const pedir = campos => sb.from('efemerides').select(campos)
       .order('mes', { ascending: true }).order('dia', { ascending: true }).order('anio', { ascending: true });
+    let { data, error } = await pedir('id, dia, mes, anio, titulo, ambito, tipo, publicada');
+    if (error) ({ data, error } = await pedir('id, dia, mes, anio, titulo, ambito, publicada'));   // por si falta la columna "tipo"
 
     if (error) { cont.innerHTML = '<p class="vacio">No pudimos cargar las efemérides.</p>'; return; }
     if (!data.length) {
@@ -38,7 +41,7 @@
         <div class="info">
           <div>
             <strong>${esc(e.dia)} de ${esc(MESES[e.mes - 1])}${e.anio ? ' de ' + esc(e.anio) : ''} — ${esc(e.titulo)}<span class="estado ${e.publicada ? 'pub' : ''}">${e.publicada ? 'Visible' : 'Oculta'}</span></strong>
-            <small>${e.ambito === 'internacional' ? 'Internacional' : 'Nacional'}</small>
+            <small>${esc(TIPOS[e.tipo] || 'Otro hecho')} · ${e.ambito === 'internacional' ? 'Internacional' : 'Nacional'}</small>
           </div>
         </div>
         <div class="acciones">
@@ -76,6 +79,7 @@
     imagenUrl = '';
     $('formEf').reset();
     $('efPublicada').checked = true;
+    $('efTipo').value = 'cumpleanos';
     A.mensaje($('msgEf'), '');
     $('efTituloEditor').textContent = 'Nueva efeméride';
     let notaId = '';
@@ -91,6 +95,7 @@
       $('efTitulo').value = data.titulo || '';
       $('efDescripcion').value = data.descripcion || '';
       $('efAmbito').value = data.ambito;
+      $('efTipo').value = data.tipo || 'otro';
       $('efPublicada').checked = !!data.publicada;
       imagenUrl = data.imagen || '';
       notaId = data.nota_id || '';
@@ -135,6 +140,7 @@
       dia, mes, anio, titulo,
       descripcion: $('efDescripcion').value.trim() || null,
       ambito: $('efAmbito').value,
+      tipo: $('efTipo').value,
       imagen: imagenUrl || null,
       nota_id: $('efNota').value || null,
       publicada: $('efPublicada').checked
@@ -147,7 +153,11 @@
       : await sb.from('efemerides').insert(registro).select().single();
     $('btnEfGuardar').disabled = false;
 
-    if (res.error) { A.mensaje($('msgEf'), A.textoError(res.error), 'error'); return; }
+    if (res.error) {
+      const falta = /tipo/i.test(res.error.message || '');
+      A.mensaje($('msgEf'), falta ? 'Falta ejecutar el script 03-efemerides-tipo.sql en Supabase (ver el ayuda memoria).' : A.textoError(res.error), 'error');
+      return;
+    }
     actual = res.data;
     $('efTituloEditor').textContent = 'Editar efeméride';
     A.mensaje($('msgEf'), registro.publicada ? 'Guardado y visible en el sitio ✓' : 'Guardado como oculta ✓', 'ok');

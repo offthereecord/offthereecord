@@ -1,0 +1,53 @@
+/* Estilos de coberturas (fotos de recitales), visor de fotos y "Quién soy" */
+
+/* ---------- Tarjetas de cobertura (listado y carrusel de la portada) ---------- */
+.cobertura { display: block; text-decoration: none; color: inherit; }
+.cobertura .foto {
+  display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px;
+  background: var(--superficie); border: 1px solid var(--borde); transition: transform .2s, border-color .2s;
+}
+a.cobertura:hover .foto, a.cobertura:focus-visible .foto { transform: translateY(-3px); border-color: var(--texto-suave); }
+.cobertura strong { display: block; margin-top: 10px; font-family: var(--f-sub); font-size: 1.5rem; font-weight: 400; line-height: 1.1; letter-spacing: .03em; }
+.cobertura span { display: block; margin-top: 2px; font-size: .92rem; color: var(--texto-suave); }
+.cobertura .sin-foto { display: flex; align-items: center; justify-content: center; color: var(--texto-suave); }
+.rejilla-cob { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px 20px; }
+.rejilla-cob > .vacio { grid-column: 1 / -1; }
+.pista .cobertura { flex: 0 0 auto; width: 260px; scroll-snap-align: start; }
+
+/* ---------- Página de una cobertura ---------- */
+.cobertura-pagina h1 { margin-bottom: 4px; }
+.cobertura-pagina .credito { color: var(--texto-suave); font-size: .95rem; margin: 6px 0 14px; }
+.galeria { columns: 3 260px; column-gap: 12px; margin-top: 18px; }
+.g-item { display: block; width: 100%; margin: 0 0 12px; padding: 0; border: 0; background: none; break-inside: avoid; cursor: zoom-in; }
+.g-item:hover { background: none; }
+.g-item img { display: block; width: 100%; height: auto; border-radius: 8px; transition: opacity .15s; }
+.g-item:hover img, .g-item:focus-visible img { opacity: .85; }
+
+/* ---------- Visor de fotos ---------- */
+dialog.lightbox { width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(0, 0, 0, .95); color: var(--texto); }
+dialog.lightbox[open] { display: flex; align-items: center; justify-content: center; }
+dialog.lightbox::backdrop { background: #000; }
+.lb-fig { margin: 0; text-align: center; }
+.lb-img { display: block; max-width: 94vw; max-height: 84vh; object-fit: contain; margin: 0 auto; border-radius: 4px; }
+.lb-pie { margin-top: 10px; font-size: .95rem; color: var(--texto-suave); }
+.lb-cerrar { position: absolute; top: 14px; right: 14px; width: 46px; height: 46px; padding: 0; border-radius: 50%; font-size: 1.2rem; background: rgba(0, 0, 0, .6); }
+.lb-flecha { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; padding: 0; border-radius: 50%; font-size: 2rem; line-height: 1; background: rgba(0, 0, 0, .6); }
+.lb-prev { left: 12px; }
+.lb-next { right: 12px; }
+@media (max-width: 600px) { .lb-flecha { width: 44px; height: 44px; font-size: 1.6rem; } }
+
+/* ---------- Quién soy ---------- */
+.perfil { display: grid; grid-template-columns: minmax(220px, 340px) 1fr; gap: 34px; align-items: start; margin-top: 8px; }
+.perfil-foto { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; border: 1px solid var(--borde); background: var(--superficie); }
+.perfil-nombre { margin: 0; font-size: 2.6rem; line-height: 1.05; }
+.perfil-rol { margin: 2px 0 16px; font-family: var(--f-sub); font-size: 1.3rem; letter-spacing: .1em; text-transform: uppercase; color: var(--texto-suave); }
+.perfil .texto-pagina p { margin: 0 0 1em; }
+@media (max-width: 760px) { .perfil { grid-template-columns: 1fr; gap: 20px; } .perfil-foto { max-width: 360px; } }
+
+/* ---------- Panel: fotos de una cobertura ---------- */
+.fotos-adm { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 12px; }
+.foto-adm { border: 1px solid var(--borde); border-radius: 8px; padding: 6px; background: var(--fondo); }
+.foto-adm img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 6px; }
+.foto-adm .foto-botones { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.foto-adm button { padding: 4px 8px; font-size: .8rem; }
+.foto-adm button.activa { background: var(--texto); color: var(--fondo); border-color: var(--texto); }

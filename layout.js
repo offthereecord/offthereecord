@@ -7,7 +7,7 @@
   const SECCIONES = [
     { clave: 'inicio',      href: 'index.html',      texto: 'Inicio' },
     { clave: 'notas',       href: 'notas.html',      texto: 'Notas' },
-    { clave: 'resenas',     href: 'resenas.html',    texto: 'Reseñas' },
+    { clave: 'coberturas',  href: 'coberturas.html',  texto: 'Coberturas' },
     { clave: 'emergentes',  href: 'emergentes.html', texto: 'Emergentes' },
     { clave: 'efemerides',  href: 'efemerides.html', texto: 'Efemérides' },
     { clave: 'playlist',    href: urlSegura(cfg.PLAYLIST_URL), texto: 'Playlist', externo: true },   // YouTube Music
@@ -81,11 +81,16 @@
   }
 
   /* ---------- Efemérides: estilos, piezas comunes y cartel del día ---------- */
-  const V = '?v=8';
+  const V = '?v=9';
   if (!document.querySelector('link[href^="efem.css"]')) {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = 'efem.css' + V;
     document.head.appendChild(l);
+  }
+  if (!document.querySelector('link[href^="coberturas.css"]')) {
+    const l2 = document.createElement('link');
+    l2.rel = 'stylesheet'; l2.href = 'coberturas.css' + V;
+    document.head.appendChild(l2);
   }
   function cargarScript(src) {
     return new Promise((ok, fallo) => {

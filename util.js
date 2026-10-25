@@ -83,3 +83,28 @@ function diasHasta(mes, dia, hoy) {
   const f = Date.UTC(hoy.anio, mes - 1, dia);
   return Math.round((f - h) / 86400000);
 }
+
+/* ---------- Coberturas (fotos de recitales) ---------- */
+
+/* "2026-10-24" → "24 de octubre de 2026" (sin cambios de huso horario) */
+function fechaDia(iso) {
+  const p = String(iso || '').split('-').map(Number);
+  if (p.length < 3 || !p[0] || !p[1] || !p[2]) return '';
+  return p[2] + ' de ' + MESES[p[1] - 1] + ' de ' + p[0];
+}
+
+/* Tarjeta de una cobertura: foto de portada + título + artista, lugar y fecha */
+function htmlCobertura(c) {
+  const foto = urlSegura(c.portada);
+  const detalle = [c.artista, c.lugar].filter(Boolean).join(' · ');
+  const fecha = c.fecha_evento ? fechaDia(c.fecha_evento) : '';
+  return `
+    <a class="cobertura" href="cobertura.html?id=${encodeURIComponent(c.id)}">
+      ${foto
+        ? `<img class="foto" src="${esc(foto)}" alt="Cobertura: ${esc(c.titulo)}" loading="lazy">`
+        : '<div class="foto sin-foto" aria-hidden="true">Sin foto</div>'}
+      <strong>${esc(c.titulo)}</strong>
+      ${detalle ? `<span>${esc(detalle)}</span>` : ''}
+      ${fecha ? `<span>${esc(fecha)}</span>` : ''}
+    </a>`;
+}
