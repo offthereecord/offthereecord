@@ -47,6 +47,7 @@
       <div class="pestanas">
         <button type="button" class="activa" data-tab="notas">Notas</button>
         <button type="button" data-tab="coberturas">Coberturas</button>
+        <button type="button" data-tab="emergentes">Emergentes</button>
         <button type="button" data-tab="efemerides">Efemérides</button>
         <button type="button" data-tab="perfil">Quién soy</button>
       </div>
@@ -157,6 +158,66 @@
         </div>
       </div>
 
+      <!-- ===== EMERGENTES (BANDAS) ===== -->
+      <div data-panel="emergentes" hidden>
+        <div id="emVistaLista">
+          <div class="barra">
+            <h2 style="margin:0">Bandas emergentes</h2>
+            <button type="button" id="btnNuevaEm" class="primario">Nueva banda</button>
+          </div>
+          <div id="emItems" class="caja"></div>
+          <p id="msgEmLista" class="mensaje" role="status"></p>
+        </div>
+
+        <div id="emVistaEditor" hidden>
+          <div class="barra">
+            <h2 id="emTituloEditor" style="margin:0">Nueva banda</h2>
+            <button type="button" id="btnEmVolver">← Volver a la lista</button>
+          </div>
+
+          <form id="formEm" class="caja">
+            <label for="emNombre">Nombre de la banda</label>
+            <input type="text" id="emNombre" maxlength="160" required>
+
+            <div class="fila-campos">
+              <div>
+                <label for="emGenero">Género</label>
+                <input type="text" id="emGenero" maxlength="120" placeholder="Punk, rock barrial, metal...">
+              </div>
+              <div>
+                <label for="emCiudad">Ciudad o zona</label>
+                <input type="text" id="emCiudad" maxlength="120" placeholder="Avellaneda, Zona Sur...">
+              </div>
+            </div>
+
+            <label for="emBio">Quiénes son (dejá una línea en blanco entre párrafos)</label>
+            <textarea id="emBio" rows="8" maxlength="5000"></textarea>
+
+            <label for="emFotoArchivo">Foto de la banda</label>
+            <input type="file" id="emFotoArchivo" accept="image/jpeg,image/png,image/webp">
+            <img id="emMiniatura" class="miniatura" alt="" hidden>
+            <button type="button" id="btnEmQuitarFoto" hidden style="margin-top:8px">Quitar foto</button>
+
+            <label for="emInstagram">Instagram (link completo)</label>
+            <input type="text" id="emInstagram" placeholder="https://www.instagram.com/...">
+            <label for="emSpotify">Spotify</label>
+            <input type="text" id="emSpotify" placeholder="https://open.spotify.com/...">
+            <label for="emYoutube">YouTube o YouTube Music</label>
+            <input type="text" id="emYoutube" placeholder="https://music.youtube.com/...">
+            <label for="emBandcamp">Bandcamp</label>
+            <input type="text" id="emBandcamp" placeholder="https://...bandcamp.com">
+            <label for="emWeb">Sitio web</label>
+            <input type="text" id="emWeb" placeholder="https://...">
+
+            <label class="check"><input type="checkbox" id="emDestacada"> Destacada (aparece primero en la sección)</label>
+            <label class="check"><input type="checkbox" id="emPublicada" checked> Visible en el sitio</label>
+
+            <p id="msgEm" class="mensaje" role="status"></p>
+            <button type="submit" id="btnEmGuardar" class="primario">Guardar</button>
+          </form>
+        </div>
+      </div>
+
       <!-- ===== EFEMÉRIDES ===== -->
       <div data-panel="efemerides" hidden>
         <div id="efVistaLista">
@@ -261,6 +322,7 @@
   <script src="util.js?v=6"></script>
   <script src="admin.js?v=6"></script>
   <script src="admin-coberturas.js?v=9"></script>
+  <script src="admin-emergentes.js?v=10"></script>
   <script src="admin-efemerides.js?v=7"></script>
   <script src="admin-perfil.js?v=9"></script>
 </body>

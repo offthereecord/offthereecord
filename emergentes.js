@@ -1,23 +1,43 @@
 'use strict';
-/* Sección Emergentes: muestra las notas publicadas que tengan la etiqueta "emergentes" */
+/* Sección Emergentes: fichas de bandas (cargadas desde el panel) y notas con la etiqueta "emergentes" */
 (async function () {
-  const lista = document.getElementById('lista');
+  const [bandas, notas] = await Promise.all([
+    sb.from('bandas')
+      .select('nombre, slug, genero, ciudad, imagen, destacada')
+      .eq('publicada', true)
+      .order('destacada', { ascending: false })
+      .order('nombre', { ascending: true }),
+    sb.from('notas')
+      .select('titulo, slug, bajada, imagen_portada, categoria, fecha_publicacion')
+      .eq('publicada', true)
+      .contains('etiquetas', ['emergentes'])
+      .order('fecha_publicacion', { ascending: false })
+  ]);
 
-  const { data, error } = await sb
-    .from('notas')
-    .select('titulo, slug, bajada, imagen_portada, categoria, fecha_publicacion')
-    .eq('publicada', true)
-    .contains('etiquetas', ['emergentes'])
-    .order('fecha_publicacion', { ascending: false });
+  const hayBandas = !bandas.error && bandas.data && bandas.data.length > 0;
+  const hayNotas = !notas.error && notas.data && notas.data.length > 0;
 
-  if (error) {
-    lista.innerHTML = '<p class="vacio">No pudimos cargar las notas. Probá de nuevo en un rato.</p>';
-    console.error(error);
-    return;
+  if (hayBandas) {
+    document.getElementById('bandas').innerHTML = bandas.data.map(b => {
+      const foto = urlSegura(b.imagen);
+      const detalle = [b.genero, b.ciudad].filter(Boolean).join(' · ');
+      return `
+        <a class="banda" href="banda.html?slug=${encodeURIComponent(b.slug)}">
+          ${foto ? `<img class="foto" src="${esc(foto)}" alt="${esc(b.nombre)}" loading="lazy">` : '<div class="foto sin-foto" aria-hidden="true">Sin foto</div>'}
+          <strong>${esc(b.nombre)}</strong>
+          ${detalle ? `<span>${esc(detalle)}</span>` : ''}
+        </a>`;
+    }).join('');
+    document.getElementById('seccionBandas').hidden = false;
   }
-  if (!data.length) {
-    lista.innerHTML = '<p class="vacio">Todavía no hay notas sobre bandas emergentes. Volvé pronto.</p>';
-    return;
+  if (hayNotas) {
+    document.getElementById('lista').innerHTML = notas.data.map(htmlTarjetaNota).join('');
+    document.getElementById('seccionNotasEm').hidden = false;
   }
-  lista.innerHTML = data.map(htmlTarjetaNota).join('');
+
+  const vacio = document.getElementById('vacioEm');
+  if (hayBandas || hayNotas) vacio.hidden = true;
+  else vacio.textContent = (bandas.error && notas.error)
+    ? 'No pudimos cargar esta sección. Probá de nuevo en un rato.'
+    : 'Todavía no hay bandas ni notas sobre emergentes. Volvé pronto.';
 })();

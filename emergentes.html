@@ -5,24 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="base.css?v=6">
+  <link rel="stylesheet" href="emergentes.css?v=10">
   <title>Emergentes · Off The Reecord</title>
-  <meta name="description" content="Notas, crónicas y entrevistas sobre las bandas del under argentino.">
+  <meta name="description" content="Las bandas del under argentino: fichas, notas, crónicas y entrevistas.">
 </head>
 <body data-seccion="emergentes">
   <div id="cabecera"></div>
 
   <main class="contenedor">
     <h1>Emergentes</h1>
-    <p class="sub">Las bandas del under: perfiles, crónicas y entrevistas de la escena emergente.</p>
-    <div id="lista" class="tarjetas" aria-live="polite"><p class="vacio">Cargando…</p></div>
+    <p class="sub">Las bandas del under: fichas, crónicas y entrevistas de la escena emergente.</p>
+
+    <section id="seccionBandas" hidden>
+      <div id="bandas" class="rejilla-bandas"></div>
+    </section>
+
+    <section id="seccionNotasEm" class="seccion-em" hidden>
+      <h2>Notas sobre emergentes</h2>
+      <div id="lista" class="tarjetas"></div>
+    </section>
+
+    <p id="vacioEm" class="vacio" aria-live="polite">Cargando…</p>
   </main>
 
   <div id="pie"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="config.js?v=6"></script>
-  <script src="util.js?v=6"></script>
-  <script src="layout.js?v=6"></script>
-  <script src="emergentes.js?v=6"></script>
+  <script src="util.js?v=9"></script>
+  <script src="layout.js?v=9"></script>
+  <script src="emergentes.js?v=10"></script>
 </body>
 </html>

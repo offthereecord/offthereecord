@@ -1,0 +1,20 @@
+/* Estilos de la sección Emergentes (bandas del under) */
+.rejilla-bandas { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 26px 18px; margin-top: 6px; }
+.banda { display: block; text-decoration: none; color: inherit; }
+.banda .foto { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; background: var(--superficie); border: 1px solid var(--borde); transition: transform .2s, border-color .2s; }
+.banda .sin-foto { display: flex; align-items: center; justify-content: center; color: var(--texto-suave); }
+a.banda:hover .foto, a.banda:focus-visible .foto { transform: translateY(-3px); border-color: var(--texto-suave); }
+.banda strong { display: block; margin-top: 10px; font-family: var(--f-sub); font-size: 1.55rem; font-weight: 400; line-height: 1.1; letter-spacing: .03em; }
+.banda span { display: block; margin-top: 2px; font-size: .92rem; color: var(--texto-suave); }
+.seccion-em { margin-top: 38px; }
+.seccion-em > h2 { margin: 0 0 14px; font-size: 2.1rem; line-height: 1.1; }
+
+/* Ficha de una banda */
+.banda-pagina { display: grid; grid-template-columns: minmax(220px, 360px) 1fr; gap: 34px; align-items: start; }
+.banda-pagina .banda-foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px; border: 1px solid var(--borde); background: var(--superficie); }
+.banda-pagina h1 { margin: 6px 0 4px; }
+.banda-pagina .sub { margin-bottom: 18px; }
+.links-banda { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 18px 0 0; padding: 0; }
+.links-banda a { display: inline-block; padding: 8px 16px; border: 1px solid var(--borde); border-radius: 99px; text-decoration: none; color: var(--texto); font-family: var(--f-sub); font-size: 1.1rem; letter-spacing: .08em; text-transform: uppercase; transition: background .15s, border-color .15s; }
+.links-banda a:hover, .links-banda a:focus-visible { background: var(--borde); border-color: var(--texto-suave); }
+@media (max-width: 760px) { .banda-pagina { grid-template-columns: 1fr; gap: 20px; } .banda-pagina .banda-foto { max-width: 380px; } }
