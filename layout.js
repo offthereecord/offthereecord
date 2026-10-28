@@ -81,11 +81,16 @@
   }
 
   /* ---------- Efemérides: estilos, piezas comunes y cartel del día ---------- */
-  const V = '?v=9';
+  const V = '?v=11';
   if (!document.querySelector('link[href^="efem.css"]')) {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = 'efem.css' + V;
     document.head.appendChild(l);
+  }
+  if (!document.querySelector('link[href^="fondo.css"]')) {
+    const l3 = document.createElement('link');
+    l3.rel = 'stylesheet'; l3.href = 'fondo.css' + V;
+    document.head.appendChild(l3);
   }
   if (!document.querySelector('link[href^="coberturas.css"]')) {
     const l2 = document.createElement('link');

@@ -1,0 +1,24 @@
+/* ============================================================
+   FONDO DE IDENTIDAD: el collage de recitales y murales,
+   repetido como una pared de afiches.
+   Ajustes rápidos:
+   - Que se vea MÁS o MENOS: cambiá el número de "opacity" (0.26 = actual; 0.40 = más presente; 0 = sin fondo).
+   - Tamaño de cada afiche: cambiá "440px" (más chico = más textura; más grande = más detalle).
+   ============================================================ */
+body::before {
+  content: "";
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -2; pointer-events: none;
+  background: url('fondo.jpg') top left / min(440px, 100vw) auto repeat;
+  opacity: 0.26;
+}
+/* Velo oscuro con viñeta: asegura que el texto siempre se lea */
+body::after {
+  content: "";
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 35%, rgba(11, 10, 18, .20) 0%, rgba(11, 10, 18, .70) 100%);
+}
+/* Con fondo de imagen, el texto secundario se aclara un poco y lleva una sombra suave */
+:root { --texto-suave: #b4b1c1; }
+main, .pie-sitio { text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
