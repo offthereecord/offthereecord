@@ -248,25 +248,32 @@ button:disabled { opacity: .5; cursor: wait; }
 @font-face { font-family: 'Oswald';      src: url('oswald.woff2') format('woff2');         font-weight: 200 700; font-display: swap; }
 
 :root {
-  --f-titulos: 'OTR Titulos', 'Bebas Neue', Impact, sans-serif;
+  --f-titulos: 'Oswald', 'Bebas Neue', Impact, sans-serif;               /* títulos: Oswald en negrita, más cuadrada */
+  --f-marca: 'OTR Titulos', 'Bebas Neue', Impact, sans-serif;           /* solo el nombre de la marca, arriba a la izquierda */
   --f-sub: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
   --f-cuerpo: 'Oswald', 'Arial Narrow', system-ui, sans-serif;
 }
 
 body { font-family: var(--f-cuerpo); font-weight: 400; letter-spacing: .01em; }
 
-/* ---- Títulos grandes: estilo pincel ---- */
-.marca span, .contenedor h1, .destacada h1, .nota h1, .intro h1 {
-  font-family: var(--f-titulos); font-weight: 400; text-transform: uppercase;
-  letter-spacing: .03em; line-height: 1.02;
-  -webkit-text-stroke: .6px currentColor;   /* le da un poco más de cuerpo al trazo de pincel */
+/* ---- Títulos grandes: Oswald en negrita, en mayúsculas ---- */
+.contenedor h1, .destacada h1, .nota h1, .intro h1 {
+  font-family: var(--f-titulos); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .02em; line-height: 1.04;
 }
+.cal-titulo, .anio-cal, .efem-fecha-grande { font-weight: 700; }
+
+/* ---- Nombre de la marca (arriba a la izquierda): conserva el estilo pincel ---- */
 .marca { font-weight: 400; }
-.marca span { font-size: 1.55rem; line-height: 1; white-space: nowrap; }
-.contenedor h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); }
-.destacada h1  { font-size: clamp(2.5rem, 6.5vw, 4.2rem); }
-.nota h1       { font-size: clamp(2.5rem, 8vw, 4rem); }
-.intro h1      { font-size: clamp(2.6rem, 8vw, 4rem); }
+.marca span {
+  font-family: var(--f-marca); font-weight: 400; text-transform: uppercase;
+  letter-spacing: .03em; line-height: 1; white-space: nowrap; font-size: 1.55rem;
+  -webkit-text-stroke: .6px currentColor;
+}
+.contenedor h1 { font-size: clamp(2.1rem, 6vw, 3.1rem); }
+.destacada h1  { font-size: clamp(2.1rem, 5.4vw, 3.5rem); }
+.nota h1       { font-size: clamp(2.1rem, 6.6vw, 3.4rem); }
+.intro h1      { font-size: clamp(2.2rem, 7vw, 3.4rem); }
 
 /* ---- Subtítulos y etiquetas: Bebas Neue ---- */
 h2, h3, .tarjeta h2, .seccion-cab h2, .nota .contenido h2, .nota .contenido h3,
