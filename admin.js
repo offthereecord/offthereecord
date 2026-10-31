@@ -78,6 +78,7 @@
     if (!session) return;
 
     $('usuario').textContent = session.user.email;
+    try { localStorage.setItem('otr_no_contar', '1'); } catch (e) { /* sin problema */ }   // tus visitas no se cuentan en las estadísticas
     const { data } = await sb.rpc('es_admin');       // ¿está este usuario en la tabla admins?
     esAdminFlag = data === true;
     $('avisoAdmin').hidden = esAdminFlag;

@@ -11,7 +11,7 @@
     { clave: 'emergentes',  href: 'emergentes.html', texto: 'Emergentes' },
     { clave: 'efemerides',  href: 'efemerides.html', texto: 'Efemérides' },
     { clave: 'playlist',    href: urlSegura(cfg.PLAYLIST_URL), texto: 'Playlist', externo: true },   // YouTube Music
-    { clave: 'quien-soy',   href: 'quien-soy.html',  texto: 'Quién soy' },
+    { clave: 'quien-soy',   href: 'quien-soy.html',  texto: '¿Quién soy?' },
     { clave: 'contacto',    href: 'contacto.html',   texto: 'Contacto' }
   ].filter(s => s.href);   // si no hay link de playlist, esa opción no se muestra
   const REDES = { instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube', x: 'X', facebook: 'Facebook', spotify: 'Spotify', whatsapp: 'WhatsApp' };
@@ -75,13 +75,13 @@
             <h2>Contacto</h2>
             <ul><li><a href="mailto:${esc(email)}">${esc(email)}</a></li></ul>
           </div>` : '<div></div>'}
-          <p class="pie-copy">© ${new Date().getFullYear()} Off The Reecord</p>
+          <p class="pie-copy">© ${new Date().getFullYear()} Off The Reecord · Medimos las visitas de forma anónima: no guardamos nombres, mails ni direcciones IP.</p>
         </div>
       </footer>`;
   }
 
   /* ---------- Efemérides: estilos, piezas comunes y cartel del día ---------- */
-  const V = '?v=11';
+  const V = '?v=14';
   if (!document.querySelector('link[href^="efem.css"]')) {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = 'efem.css' + V;
@@ -110,4 +110,5 @@
       await cargarScript('efemerides-popup.js');
     } catch (e) { console.error('No se pudo cargar el cartel de efemérides', e); }
   })();
+  cargarScript('analitica.js').catch(() => {});   // medición anónima de visitas
 })();

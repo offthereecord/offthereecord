@@ -57,7 +57,7 @@
     const res = await sb.from('perfil').upsert(registro).select().single();
     $('btnPfGuardar').disabled = false;
     if (res.error) { A.mensaje($('msgPf'), A.textoError(res.error), 'error'); return; }
-    A.mensaje($('msgPf'), 'Guardado ✓ Ya se ve en la página «Quién soy».', 'ok');
+    A.mensaje($('msgPf'), 'Guardado ✓ Ya se ve en la página «¿Quién soy?».', 'ok');
   });
 
   document.addEventListener('otr:pestana', e => { if (e.detail === 'perfil') cargar(); });

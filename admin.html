@@ -7,6 +7,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Panel · Off The Reecord</title>
   <link rel="stylesheet" href="base.css?v=6">
+  <link rel="stylesheet" href="estadisticas.css?v=14">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
 </head>
 <body class="panel-admin">
@@ -49,7 +50,8 @@
         <button type="button" data-tab="coberturas">Coberturas</button>
         <button type="button" data-tab="emergentes">Emergentes</button>
         <button type="button" data-tab="efemerides">Efemérides</button>
-        <button type="button" data-tab="perfil">Quién soy</button>
+        <button type="button" data-tab="perfil">¿Quién soy?</button>
+        <button type="button" data-tab="estadisticas">Estadísticas</button>
       </div>
 
       <!-- ===== NOTAS ===== -->
@@ -287,9 +289,66 @@
         </div>
       </div>
 
+      <!-- ===== ESTADÍSTICAS ===== -->
+      <div data-panel="estadisticas" hidden>
+        <div class="barra"><h2 style="margin:0">Estadísticas de tráfico</h2></div>
+        <div class="est-barra">
+          <label for="estRango" style="margin:0">Período:</label>
+          <select id="estRango">
+            <option value="1">Hoy</option>
+            <option value="7">Últimos 7 días</option>
+            <option value="30" selected>Últimos 30 días</option>
+            <option value="90">Últimos 90 días</option>
+            <option value="0">Todo el historial</option>
+          </select>
+          <button type="button" id="btnEstActualizar">Actualizar</button>
+        </div>
+        <p id="msgEst" class="mensaje" role="status"></p>
+
+        <div id="estContenido" hidden>
+          <div id="estKpis" class="kpis"></div>
+
+          <div class="caja">
+            <h3 style="margin:0 0 4px">Actividad por día</h3>
+            <div id="estDias" class="dias"></div>
+            <div class="leyenda-est"><span><i style="background:var(--texto)"></i>Páginas vistas</span><span><i style="background:var(--texto-suave)"></i>Visitantes</span></div>
+          </div>
+
+          <div class="caja">
+            <h3 style="margin:0 0 8px">Páginas, notas y solapas más visitadas</h3>
+            <div id="estPaginas"></div>
+          </div>
+
+          <div class="est-dos">
+            <div class="caja"><h3 style="margin:0 0 8px">De dónde llegan</h3><div id="estOrigenes"></div></div>
+            <div class="caja"><h3 style="margin:0 0 8px">Desde qué dispositivo</h3><div id="estDispositivos"></div></div>
+          </div>
+
+          <div class="caja">
+            <h3 style="margin:0 0 8px">Clics más frecuentes</h3>
+            <div id="estClics"></div>
+          </div>
+
+          <details class="caja est-ayuda">
+            <summary>Cómo leer estos números</summary>
+            <ul>
+              <li><b>Visitantes:</b> navegadores distintos. Una persona que entra desde el celular y desde la compu cuenta como dos.</li>
+              <li><b>Visitas:</b> cada vez que alguien entra. Si vuelve mañana, es otra visita.</li>
+              <li><b>Páginas vistas:</b> cada página que se abre (una visita puede abrir varias).</li>
+              <li><b>Tiempo:</b> cuánto estuvo la página abierta y a la vista. No se cuenta cuando la pestaña está en segundo plano.</li>
+              <li><b>Bajan:</b> hasta qué punto de la página llegaron, en promedio. 100% = llegaron al final.</li>
+              <li><b>Se fueron sin seguir:</b> porcentaje de visitas que miraron una sola página.</li>
+              <li><b>De dónde llegan:</b> «Directo / app» incluye links abiertos desde WhatsApp o Instagram que no avisan su origen. Para medir mejor tus publicaciones, agregá <code>?utm_source=instagram</code> al final del link que compartís.</li>
+              <li>Tus propias visitas desde este navegador no se cuentan. Tampoco las de robots ni de quien tenga activado «No rastrear».</li>
+              <li>Los números no incluyen nombres, mails ni direcciones IP.</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+
       <!-- ===== QUIÉN SOY ===== -->
       <div data-panel="perfil" hidden>
-        <div class="barra"><h2 style="margin:0">Quién soy</h2></div>
+        <div class="barra"><h2 style="margin:0">¿Quién soy?</h2></div>
         <form id="formPerfil" class="caja">
           <label for="pfNombre">Tu nombre (como querés que aparezca)</label>
           <input type="text" id="pfNombre" maxlength="120">
@@ -325,5 +384,6 @@
   <script src="admin-emergentes.js?v=10"></script>
   <script src="admin-efemerides.js?v=7"></script>
   <script src="admin-perfil.js?v=9"></script>
+  <script src="admin-estadisticas.js?v=14"></script>
 </body>
 </html>
