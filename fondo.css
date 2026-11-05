@@ -39,3 +39,14 @@ main, .pie-sitio { text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
 }
 .nota .contenido, .texto-pagina { color: #f1eff7; text-shadow: none; }
 .nota .bajada, .nota .meta { text-shadow: none; }
+
+/* Los textos pegados desde otros programas traen colores y fondos propios (letras grises u oscuras).
+   Acá se fuerzan a claro para que siempre se lean dentro del recuadro. */
+.nota .contenido, .nota .contenido *:not(a):not(img):not(svg) {
+  color: #f1eff7 !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+.nota .contenido a { color: #ffb347 !important; }
+.nota .contenido blockquote, .nota .contenido blockquote * { color: #cfcbdc !important; }
