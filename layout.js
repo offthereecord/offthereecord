@@ -81,7 +81,7 @@
   }
 
   /* ---------- Efemérides: estilos, piezas comunes y cartel del día ---------- */
-  const V = '?v=14';
+  const V = '?v=15';
   if (!document.querySelector('link[href^="efem.css"]')) {
     const l = document.createElement('link');
     l.rel = 'stylesheet'; l.href = 'efem.css' + V;

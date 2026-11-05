@@ -22,3 +22,20 @@ body::after {
 /* Con fondo de imagen, el texto secundario se aclara un poco y lleva una sombra suave */
 :root { --texto-suave: #b4b1c1; }
 main, .pie-sitio { text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
+
+/* ============================================================
+   RECUADRO DE LECTURA: panel oscuro detrás de los textos largos
+   (notas y páginas de texto) para que se lean sobre el collage.
+   Ajustes rápidos: el ".86" es la opacidad del panel (más alto = más oscuro).
+   ============================================================ */
+.nota, .texto-pagina {
+  background: rgba(11, 10, 18, .86);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  padding: 30px clamp(18px, 4vw, 40px) 40px;
+  margin-top: 24px; margin-bottom: 40px;
+}
+.nota .contenido, .texto-pagina { color: #f1eff7; text-shadow: none; }
+.nota .bajada, .nota .meta { text-shadow: none; }
