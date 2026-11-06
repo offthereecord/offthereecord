@@ -20,8 +20,8 @@
     ${n.publicada ? '' : '<p class="aviso">Borrador: solo vos podés ver esta nota.</p>'}
     <span class="categoria">${esc(CATEGORIAS[n.categoria] || n.categoria)}</span>
     <h1>${esc(n.titulo)}</h1>
-    ${n.bajada ? `<p class="bajada">${esc(n.bajada)}</p>` : ''}
     ${meta ? `<div class="meta">${esc(meta)}</div>` : ''}
     ${foto ? `<img class="portada-nota" src="${esc(foto)}" alt="">` : ''}
+    ${n.bajada ? `<p class="bajada">${esc(n.bajada)}</p>` : ''}
     <div class="contenido">${DOMPurify.sanitize(n.contenido || '')}</div>`;
 })();

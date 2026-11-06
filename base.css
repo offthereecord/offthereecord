@@ -272,7 +272,7 @@ body { font-family: var(--f-cuerpo); font-weight: 400; letter-spacing: .01em; }
 }
 .contenedor h1 { font-size: clamp(2.1rem, 6vw, 3.1rem); }
 .destacada h1  { font-size: clamp(2.1rem, 5.4vw, 3.5rem); }
-.nota h1       { font-size: clamp(2.1rem, 6.6vw, 3.4rem); }
+.nota h1       { font-size: clamp(1.7rem, 5vw, 2.5rem); line-height: 1.12; }
 .intro h1      { font-size: clamp(2.2rem, 7vw, 3.4rem); }
 
 /* ---- Subtítulos y etiquetas: Bebas Neue ---- */
