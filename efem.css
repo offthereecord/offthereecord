@@ -1,6 +1,6 @@
 /* Estilos de las efemérides: calendario y ventana emergente.
    Los colores del calendario se cambian acá: */
-:root { --cal-nac: #7aa7ff; --cal-int: #ffb454; }
+:root { --cal-nac: #ffffff; --cal-int: #e63946; }
 
 /* ---------- Calendario ---------- */
 .leyenda { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin: 4px 0 6px; color: var(--texto-suave); font-size: .95rem; }
