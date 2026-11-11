@@ -1,0 +1,52 @@
+/* Panel de efemérides: tarjeta "Próxima fecha" y solapas por mes */
+.ef-proxima { border-left: 4px solid #e63946; margin: 14px 0 6px; }
+.ef-proxima-et { display: block; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); }
+.ef-proxima-cuando { display: block; font-size: 1.35rem; margin: 2px 0 8px; }
+.ef-proxima-item { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--borde); }
+.ef-proxima-item > div { min-width: 0; flex: 1 1 240px; }
+.ef-proxima-tit { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.ef-proxima-item small { color: var(--texto-suave); }
+
+.ef-meses { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 16px 0; }
+.ef-meses button { position: relative; padding: 9px 4px 7px; border: 1px solid var(--borde); border-radius: 8px; background: transparent; color: var(--texto); font: inherit; line-height: 1.2; cursor: pointer; }
+.ef-meses button:hover { border-color: var(--texto); }
+.ef-meses button .n { display: block; font-size: .75rem; color: var(--texto-suave); }
+.ef-meses button.sin-datos { opacity: .45; }
+.ef-meses button[aria-selected="true"] { background: var(--texto); color: var(--fondo); border-color: var(--texto); opacity: 1; }
+.ef-meses button[aria-selected="true"] .n { color: var(--fondo); }
+.ef-meses button.actual::after { content: ""; position: absolute; top: 5px; right: 6px; width: 6px; height: 6px; border-radius: 50%; background: #e63946; }
+
+.ef-dia { flex: none; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--borde); border-radius: 8px; font-size: 1.15rem; font-weight: 600; }
+.ef-fila.es-hoy .ef-dia { border-color: #e63946; color: #e63946; }
+.estado.hoy { color: #e63946; border-color: #e63946; }
+
+@media (max-width: 640px) { .ef-meses { grid-template-columns: repeat(4, 1fr); } }
+
+/* Buscador, aviso de duplicados y resultados */
+.ef-filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.ef-buscar { flex: 1 1 260px; min-width: 0; margin: 0; padding: 11px 14px; border: 1px solid var(--borde); border-radius: 8px; background: transparent; color: var(--texto); font: inherit; }
+.ef-buscar:focus { outline: 0; border-color: var(--texto); }
+.ef-meses.buscando button { opacity: .6; }
+.ef-aviso { margin: 0 0 10px; padding: 10px 14px; border: 1px solid #f0b429; border-radius: 8px; color: #f0b429; font-size: .95rem; }
+.ef-aviso[hidden] { display: none; }
+.estado.dup { color: #f0b429; border-color: #f0b429; }
+.ef-resultados { margin: 0 0 4px; color: var(--texto-suave); font-size: .9rem; }
+.ef-dia { flex-direction: column; line-height: 1.05; }
+.ef-dia small { font-size: .62rem; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--texto-suave); }
+
+/* Filtro de ocultas, marcas de "le falta algo" y días sin efeméride */
+.ef-ocultas { padding: 0 16px; border: 1px solid var(--borde); border-radius: 8px; background: transparent; color: var(--texto); font: inherit; cursor: pointer; min-height: 44px; }
+.ef-ocultas:hover:not(:disabled) { border-color: var(--texto); }
+.ef-ocultas:disabled { opacity: .45; cursor: default; }
+.ef-ocultas[aria-pressed="true"] { background: var(--texto); color: var(--fondo); border-color: var(--texto); }
+
+.ef-faltas { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 4px; }
+.ef-faltas span { font-size: .72rem; padding: 1px 7px; border: 1px dashed var(--borde); border-radius: 99px; color: var(--texto-suave); }
+
+.ef-huecos { margin: 0 0 10px; border: 1px solid var(--borde); border-radius: 8px; padding: 10px 14px; }
+.ef-huecos summary { cursor: pointer; color: var(--texto-suave); }
+.ef-huecos[open] summary { margin-bottom: 10px; color: var(--texto); }
+.ef-huecos-dias { display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 6px; }
+.ef-huecos-dias button { padding: 8px 0; border: 1px dashed var(--borde); border-radius: 6px; background: transparent; color: var(--texto); font: inherit; cursor: pointer; }
+.ef-huecos-dias button:hover { border-style: solid; border-color: var(--texto); }
+.ef-huecos-ok { margin: 0 0 10px; color: var(--ok); font-size: .9rem; }

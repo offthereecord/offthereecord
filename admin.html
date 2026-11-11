@@ -6,8 +6,9 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <title>Panel · Off The Reecord</title>
-  <link rel="stylesheet" href="base.css?v=6">
+  <link rel="stylesheet" href="base.css?v=7">
   <link rel="stylesheet" href="estadisticas.css?v=14">
+  <link rel="stylesheet" href="admin-efem.css?v=3">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
 </head>
 <body class="panel-admin">
@@ -227,6 +228,14 @@
             <h2 style="margin:0">Efemérides</h2>
             <button type="button" id="btnNuevaEf" class="primario">Nueva efeméride</button>
           </div>
+          <div id="efProxima"></div>
+          <div class="ef-filtros">
+            <input type="search" id="efBuscar" class="ef-buscar" placeholder="Buscar una efeméride por nombre…" autocomplete="off" aria-label="Buscar efemérides">
+            <button type="button" id="efOcultas" class="ef-ocultas" aria-pressed="false">Solo ocultas</button>
+          </div>
+          <div id="efMeses" class="ef-meses" role="tablist" aria-label="Meses"></div>
+          <p id="efAviso" class="ef-aviso" hidden></p>
+          <div id="efHuecos"></div>
           <div id="efItems" class="caja"></div>
           <p id="msgEfLista" class="mensaje" role="status"></p>
         </div>
@@ -382,7 +391,7 @@
   <script src="admin.js?v=6"></script>
   <script src="admin-coberturas.js?v=9"></script>
   <script src="admin-emergentes.js?v=10"></script>
-  <script src="admin-efemerides.js?v=7"></script>
+  <script src="admin-efemerides.js?v=10"></script>
   <script src="admin-perfil.js?v=9"></script>
   <script src="admin-estadisticas.js?v=14"></script>
 </body>
