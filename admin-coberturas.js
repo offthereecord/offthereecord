@@ -130,6 +130,10 @@
     try { $('cbCredito').value = localStorage.getItem('otr_credito') || ''; } catch (e) { /* sin problema */ }
     A.mensaje($('msgCb'), '');
     $('cbTituloEditor').textContent = 'Nueva cobertura';
+    OTR_REDES.montar($('redesCob'), []);
+    let credRecordado = [];
+    try { credRecordado = JSON.parse(localStorage.getItem('otr_redes_credito') || '[]'); } catch (e) { /* sin problema */ }
+    OTR_REDES.montar($('redesCredito'), credRecordado);
     let notaId = '';
 
     if (id) {
@@ -139,6 +143,8 @@
       $('cbTituloEditor').textContent = 'Editar cobertura';
       $('cbTitulo').value = data.titulo || '';
       $('cbArtista').value = data.artista || '';
+      OTR_REDES.montar($('redesCob'), data.redes);
+      OTR_REDES.montar($('redesCredito'), data.redes_credito);
       $('cbLugar').value = data.lugar || '';
       $('cbFecha').value = data.fecha_evento || '';
       $('cbDescripcion').value = data.descripcion || '';
@@ -159,10 +165,15 @@
     e.preventDefault();
     const titulo = $('cbTitulo').value.trim();
     if (!titulo) { A.mensaje($('msgCb'), 'Escribí un título.', 'error'); return; }
+    const redes = OTR_REDES.leer($('redesCob'));
+    const redesCred = OTR_REDES.leer($('redesCredito'));
+    if (redes.error || redesCred.error) { A.mensaje($('msgCb'), redes.error || redesCred.error, 'error'); return; }
 
     const registro = {
       titulo,
       artista: $('cbArtista').value.trim() || null,
+      redes: redes.lista,
+      redes_credito: redesCred.lista,
       lugar: $('cbLugar').value.trim() || null,
       fecha_evento: $('cbFecha').value || null,
       descripcion: $('cbDescripcion').value.trim() || null,
@@ -180,10 +191,10 @@
       : await sb.from('coberturas').insert(registro).select().single();
     $('btnCbGuardar').disabled = false;
 
-    if (res.error) { A.mensaje($('msgCb'), A.textoError(res.error), 'error'); return; }
+    if (res.error) { A.mensaje($('msgCb'), /redes/.test(res.error.message || '') ? 'Falta ejecutar el script 06-redes.sql en Supabase (ver el ayuda memoria).' : A.textoError(res.error), 'error'); return; }
     actual = res.data;
     $('cbTituloEditor').textContent = 'Editar cobertura';
-    try { if (registro.credito) localStorage.setItem('otr_credito', registro.credito); } catch (err) { /* sin problema */ }
+    try { if (registro.credito) localStorage.setItem('otr_credito', registro.credito); localStorage.setItem('otr_redes_credito', JSON.stringify(registro.redes_credito)); } catch (err) { /* sin problema */ }
     A.mensaje($('msgCb'), registro.publicada ? 'Guardado y visible en el sitio ✓' : 'Guardado como oculta ✓', 'ok');
   });
 

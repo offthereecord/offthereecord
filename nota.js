@@ -14,14 +14,17 @@
 
   document.title = n.titulo + ' · Off The Reecord';
   const foto = urlSegura(n.imagen_portada);
-  const meta = [n.autor, fechaLarga(n.fecha_publicacion)].filter(Boolean).join(' · ');
+  /* nombre de quien escribe + logos de sus redes + fecha */
+  const redesAutor = OTR_REDES.iconos(n.redes_autor);
+  const meta = [(n.autor ? esc(n.autor) : '') + redesAutor, esc(fechaLarga(n.fecha_publicacion))].filter(x => x && x.trim()).join(' · ');
 
   caja.innerHTML = `
     ${n.publicada ? '' : '<p class="aviso">Borrador: solo vos podés ver esta nota.</p>'}
     <span class="categoria">${esc(CATEGORIAS[n.categoria] || n.categoria)}</span>
     <h1>${esc(n.titulo)}</h1>
-    ${meta ? `<div class="meta">${esc(meta)}</div>` : ''}
+    ${meta ? `<div class="meta">${meta}</div>` : ''}
     ${foto ? `<img class="portada-nota" src="${esc(foto)}" alt="">` : ''}
     ${n.bajada ? `<p class="bajada">${esc(n.bajada)}</p>` : ''}
-    <div class="contenido">${DOMPurify.sanitize(n.contenido || '')}</div>`;
+    <div class="contenido">${DOMPurify.sanitize(n.contenido || '')}</div>
+    ${OTR_REDES.bloque('Seguí a la banda', n.redes_banda)}`;
 })();

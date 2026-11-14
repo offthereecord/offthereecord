@@ -3,7 +3,6 @@
 (function () {
   const A = window.OTR_ADMIN;
   const $ = id => document.getElementById(id);
-  const LINKS = { instagram: 'emInstagram', spotify: 'emSpotify', youtube: 'emYoutube', bandcamp: 'emBandcamp', web: 'emWeb' };
 
   let actual = null;   // banda que se está editando (null = nueva)
   let fotoUrl = '';
@@ -80,6 +79,7 @@
     $('emPublicada').checked = true;
     A.mensaje($('msgEm'), '');
     $('emTituloEditor').textContent = 'Nueva banda';
+    OTR_REDES.montar($('redesEm'), []);
 
     if (id) {
       const { data, error } = await sb.from('bandas').select('*').eq('id', id).single();
@@ -93,7 +93,8 @@
       $('emDestacada').checked = !!data.destacada;
       $('emPublicada').checked = !!data.publicada;
       fotoUrl = data.imagen || '';
-      Object.keys(LINKS).forEach(k => { $(LINKS[k]).value = (data.links || {})[k] || ''; });
+      // si la ficha es vieja (cargada con los 5 campos fijos), esos links pasan a la lista nueva
+      OTR_REDES.montar($('redesEm'), (data.redes && data.redes.length) ? data.redes : OTR_REDES.desdeLinks(data.links));
     }
     mostrarFoto();
     $('emVistaLista').hidden = true;
@@ -131,20 +132,16 @@
     const nombre = $('emNombre').value.trim();
     if (!nombre) { A.mensaje($('msgEm'), 'Escribí el nombre de la banda.', 'error'); return; }
 
-    const links = {};
-    for (const k of Object.keys(LINKS)) {
-      const txt = $(LINKS[k]).value.trim();
-      if (!txt) continue;
-      if (!urlSegura(txt)) { A.mensaje($('msgEm'), 'El link de ' + k + ' no es válido: tiene que empezar con https://', 'error'); return; }
-      links[k] = urlSegura(txt);
-    }
+    const redes = OTR_REDES.leer($('redesEm'));
+    if (redes.error) { A.mensaje($('msgEm'), redes.error, 'error'); return; }
     const registro = {
       nombre,
       genero: $('emGenero').value.trim() || null,
       ciudad: $('emCiudad').value.trim() || null,
       bio: $('emBio').value.trim() || null,
       imagen: fotoUrl || null,
-      links,
+      links: {},
+      redes: redes.lista,
       destacada: $('emDestacada').checked,
       publicada: $('emPublicada').checked
     };
@@ -156,7 +153,7 @@
       : await insertarConSlug(registro);
     $('btnEmGuardar').disabled = false;
 
-    if (res.error) { A.mensaje($('msgEm'), A.textoError(res.error), 'error'); return; }
+    if (res.error) { A.mensaje($('msgEm'), /redes/.test(res.error.message || '') ? 'Falta ejecutar el script 06-redes.sql en Supabase (ver el ayuda memoria).' : A.textoError(res.error), 'error'); return; }
     actual = res.data;
     $('emTituloEditor').textContent = 'Editar banda';
     A.mensaje($('msgEm'), registro.publicada ? 'Guardado y visible en Emergentes ✓' : 'Guardado como oculta ✓', 'ok');

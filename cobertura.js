@@ -21,7 +21,8 @@
     <h1>${esc(c.titulo)}</h1>
     ${detalle ? `<p class="sub">${esc(detalle)}</p>` : ''}
     ${parrafos ? `<div class="texto-pagina">${parrafos}</div>` : ''}
-    ${c.credito ? `<p class="credito">Fotos: ${esc(c.credito)}</p>` : ''}
+    ${OTR_REDES.bloque('Seguí a ' + (c.artista || 'la banda'), c.redes)}
+    ${(c.credito || OTR_REDES.iconos(c.redes_credito)) ? `<p class="credito">Fotos${c.credito ? ': ' + esc(c.credito) : ''}${OTR_REDES.iconos(c.redes_credito)}</p>` : ''}
     ${c.notas && c.notas.slug ? `<p><a class="boton" href="nota.html?slug=${encodeURIComponent(c.notas.slug)}">Leer la crónica</a></p>` : ''}
     ${fotos.length ? `<div class="galeria">${fotos.map((u, i) => `
       <button type="button" class="g-item" data-i="${i}" aria-label="Ver la foto ${i + 1} de ${fotos.length}">

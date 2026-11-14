@@ -10,9 +10,7 @@
   if (error || !b) return noEsta();
 
   document.title = b.nombre + ' · Off The Reecord';
-  const NOMBRES = { instagram: 'Instagram', spotify: 'Spotify', youtube: 'YouTube', bandcamp: 'Bandcamp', web: 'Sitio web' };
-  const links = Object.keys(NOMBRES)
-    .map(k => ({ nombre: NOMBRES[k], url: urlSegura((b.links || {})[k]) })).filter(l => l.url);
+  const redes = (b.redes && b.redes.length) ? b.redes : OTR_REDES.desdeLinks(b.links);   // fichas viejas: usan los campos fijos
   const foto = urlSegura(b.imagen);
   const detalle = [b.genero, b.ciudad].filter(Boolean).join(' · ');
   const parrafos = String(b.bio || '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
@@ -27,7 +25,7 @@
         <h1>${esc(b.nombre)}</h1>
         ${detalle ? `<p class="sub">${esc(detalle)}</p>` : ''}
         <div class="texto-pagina">${parrafos}</div>
-        ${links.length ? `<ul class="links-banda">${links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.nombre)}</a></li>`).join('')}</ul>` : ''}
+        ${OTR_REDES.bloque('Redes de la banda', redes)}
         <p style="margin-top:22px"><a href="emergentes.html">← Volver a Emergentes</a></p>
       </div>
     </div>`;

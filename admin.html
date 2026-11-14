@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="base.css?v=7">
   <link rel="stylesheet" href="estadisticas.css?v=14">
   <link rel="stylesheet" href="admin-efem.css?v=3">
+  <link rel="stylesheet" href="redes.css?v=2">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">
 </head>
 <body class="panel-admin">
@@ -85,6 +86,14 @@
             <label for="autor">Autor/a</label>
             <input type="text" id="autor" maxlength="120">
 
+            <label>Redes de quien escribe la nota</label>
+            <p class="redes-ayuda">Los logos van a aparecer al lado del nombre del autor o la autora. Cargá las que quieras; si escriben dos personas, poné el nombre de cada una en «De quién».</p>
+            <div id="redesAutorNota"></div>
+
+            <label>Redes de la banda o artista de la nota</label>
+            <p class="redes-ayuda">Si la nota es de una banda, sumá sus redes (y las de cada integrante si querés).</p>
+            <div id="redesBandaNota"></div>
+
             <label for="etiquetas">Etiquetas (separadas por coma). Poné «emergentes» para que la nota aparezca en la sección Emergentes</label>
             <input type="text" id="etiquetas" placeholder="rock, under, crónica">
 
@@ -127,6 +136,14 @@
 
             <label for="cbArtista">Banda o artista</label>
             <input type="text" id="cbArtista" maxlength="200">
+
+            <label>Redes de la banda o artista</label>
+            <p class="redes-ayuda">Una por fila. Para sumar a cada integrante, usá «De quién» (ej.: Juan, guitarra).</p>
+            <div id="redesCob"></div>
+
+            <label>Redes de quien firma las fotos</label>
+            <p class="redes-ayuda">Los logos van a aparecer al lado del crédito de las fotos.</p>
+            <div id="redesCredito"></div>
 
             <div class="fila-campos">
               <div>
@@ -201,16 +218,9 @@
             <img id="emMiniatura" class="miniatura" alt="" hidden>
             <button type="button" id="btnEmQuitarFoto" hidden style="margin-top:8px">Quitar foto</button>
 
-            <label for="emInstagram">Instagram (link completo)</label>
-            <input type="text" id="emInstagram" placeholder="https://www.instagram.com/...">
-            <label for="emSpotify">Spotify</label>
-            <input type="text" id="emSpotify" placeholder="https://open.spotify.com/...">
-            <label for="emYoutube">YouTube o YouTube Music</label>
-            <input type="text" id="emYoutube" placeholder="https://music.youtube.com/...">
-            <label for="emBandcamp">Bandcamp</label>
-            <input type="text" id="emBandcamp" placeholder="https://...bandcamp.com">
-            <label for="emWeb">Sitio web</label>
-            <input type="text" id="emWeb" placeholder="https://...">
+            <label>Redes de la banda y de sus integrantes</label>
+            <p class="redes-ayuda">Cargá las que quieras: una por fila. Si la banda tiene 8 integrantes, podés sumar la red de cada uno poniendo su nombre en «De quién» (ej.: Juan, guitarra).</p>
+            <div id="redesEm"></div>
 
             <label class="check"><input type="checkbox" id="emDestacada"> Destacada (aparece primero en la sección)</label>
             <label class="check"><input type="checkbox" id="emPublicada" checked> Visible en el sitio</label>
@@ -388,9 +398,10 @@
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
   <script src="config.js?v=6"></script>
   <script src="util.js?v=6"></script>
-  <script src="admin.js?v=6"></script>
-  <script src="admin-coberturas.js?v=9"></script>
-  <script src="admin-emergentes.js?v=10"></script>
+  <script src="redes.js?v=2"></script>
+  <script src="admin.js?v=7"></script>
+  <script src="admin-coberturas.js?v=11"></script>
+  <script src="admin-emergentes.js?v=11"></script>
   <script src="admin-efemerides.js?v=10"></script>
   <script src="admin-perfil.js?v=9"></script>
   <script src="admin-estadisticas.js?v=14"></script>

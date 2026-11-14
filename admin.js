@@ -224,6 +224,10 @@
     $('categoria').value = 'nota';
     try { $('autor').value = localStorage.getItem('otr_autor') || ''; } catch (e) { /* sin problema */ }
     $('tituloEditor').textContent = 'Nueva nota';
+    let redesRecordadas = [];
+    try { redesRecordadas = JSON.parse(localStorage.getItem('otr_redes_autor') || '[]'); } catch (e) { /* sin problema */ }
+    OTR_REDES.montar($('redesAutorNota'), redesRecordadas);
+    OTR_REDES.montar($('redesBandaNota'), []);
 
     if (id) {
       const { data, error } = await sb.from('notas').select('*').eq('id', id).single();
@@ -236,6 +240,8 @@
       $('autor').value = data.autor || '';
       $('etiquetas').value = (data.etiquetas || []).join(', ');
       $('publicada').checked = !!data.publicada;
+      OTR_REDES.montar($('redesAutorNota'), data.redes_autor);
+      OTR_REDES.montar($('redesBandaNota'), data.redes_banda);
       portadaUrl = data.imagen_portada || '';
       quill.clipboard.dangerouslyPasteHTML(data.contenido || '');
     }
@@ -260,6 +266,10 @@
     const titulo = $('titulo').value.trim();
     if (!titulo) { mensaje($('msgNota'), 'Escribí un título.', 'error'); return; }
 
+    const rAutor = OTR_REDES.leer($('redesAutorNota'));
+    const rBanda = OTR_REDES.leer($('redesBandaNota'));
+    if (rAutor.error || rBanda.error) { mensaje($('msgNota'), rAutor.error || rBanda.error, 'error'); return; }
+
     const publicada = $('publicada').checked;
     const sinTexto = !quill.getText().trim() && !quill.root.querySelector('img');
     const registro = {
@@ -267,6 +277,8 @@
       bajada: $('bajada').value.trim() || null,
       categoria: $('categoria').value,
       autor: $('autor').value.trim() || null,
+      redes_autor: rAutor.lista,
+      redes_banda: rBanda.lista,
       etiquetas: $('etiquetas').value.split(',').map(t => t.trim().toLowerCase()).filter(Boolean),
       imagen_portada: portadaUrl || null,
       contenido: sinTexto ? '' : quill.root.innerHTML,
@@ -284,10 +296,10 @@
       : await insertarConSlug(registro);
     $('btnGuardar').disabled = false;
 
-    if (res.error) { mensaje($('msgNota'), textoError(res.error), 'error'); return; }
+    if (res.error) { mensaje($('msgNota'), /redes/.test(res.error.message || '') ? 'Falta ejecutar el script 06-redes.sql en Supabase (ver el ayuda memoria).' : textoError(res.error), 'error'); return; }
     notaActual = res.data;
     $('tituloEditor').textContent = 'Editar nota';
-    try { if (registro.autor) localStorage.setItem('otr_autor', registro.autor); } catch (err) { /* sin problema */ }
+    try { if (registro.autor) localStorage.setItem('otr_autor', registro.autor); localStorage.setItem('otr_redes_autor', JSON.stringify(registro.redes_autor)); } catch (err) { /* sin problema */ }
     mensaje($('msgNota'), publicada ? 'Guardado y publicado ✓' : 'Guardado como borrador ✓', 'ok');
   });
 
