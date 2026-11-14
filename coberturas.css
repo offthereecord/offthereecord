@@ -17,11 +17,35 @@ a.cobertura:hover .foto, a.cobertura:focus-visible .foto { transform: translateY
 /* ---------- Página de una cobertura ---------- */
 .cobertura-pagina h1 { margin-bottom: 4px; }
 .cobertura-pagina .credito { color: var(--texto-suave); font-size: .95rem; margin: 6px 0 14px; }
-.galeria { columns: 3 260px; column-gap: 12px; margin-top: 18px; }
-.g-item { display: block; width: 100%; margin: 0 0 12px; padding: 0; border: 0; background: none; break-inside: avoid; cursor: zoom-in; }
-.g-item:hover { background: none; }
-.g-item img { display: block; width: 100%; height: auto; border-radius: 8px; transition: opacity .15s; }
-.g-item:hover img, .g-item:focus-visible img { opacity: .85; }
+/* Galería tipo collage: fotos de distinto ancho, algo torcidas y pegadas como copias impresas.
+   El "desorden" es fijo (sale de la posición de cada foto), así que no cambia al recargar. */
+.galeria { columns: 3 250px; column-gap: 30px; margin: 28px 0 10px; padding: 10px 8px 0; }
+.g-item { position: relative; display: block; width: var(--ancho, 100%); margin: 0 0 var(--abajo, 28px) var(--izq, 0); padding: 7px; border: 0; border-radius: 3px; break-inside: avoid;
+  background: #ece7dc; box-shadow: 0 8px 22px rgba(0, 0, 0, .55); transform: rotate(var(--giro, 0deg)); transition: transform .22s ease, box-shadow .22s ease; cursor: zoom-in; }
+.g-item:hover, .g-item:focus-visible { background: #f5f1e8; z-index: 5; transform: rotate(0deg) scale(1.05); box-shadow: 0 16px 38px rgba(0, 0, 0, .7); outline: 0; }
+.g-item img { display: block; width: 100%; height: auto; border-radius: 1px; }
+/* cinta adhesiva en algunas fotos */
+.g-item:nth-child(4n+1)::before { content: ""; position: absolute; top: -11px; left: 50%; width: 76px; height: 22px; margin-left: -38px; transform: rotate(-3deg);
+  background: rgba(230, 215, 170, .55); box-shadow: 0 1px 3px rgba(0, 0, 0, .25); }
+
+/* patrón de 7 fotos que se repite: ancho, corrimiento lateral, giro y separación */
+.g-item:nth-child(7n+1) { --ancho: 100%; --izq: 0;   --giro: -2.2deg; --abajo: 30px; }
+.g-item:nth-child(7n+2) { --ancho: 82%;  --izq: 14%; --giro: 1.8deg;  --abajo: 18px; }
+.g-item:nth-child(7n+3) { --ancho: 92%;  --izq: 4%;  --giro: -1deg;   --abajo: 36px; }
+.g-item:nth-child(7n+4) { --ancho: 76%;  --izq: 0;   --giro: 2.6deg;  --abajo: 22px; }
+.g-item:nth-child(7n+5) { --ancho: 98%;  --izq: 2%;  --giro: -1.6deg; --abajo: 14px; }
+.g-item:nth-child(7n+6) { --ancho: 84%;  --izq: 12%; --giro: 1.2deg;  --abajo: 32px; }
+.g-item:nth-child(7n+7) { --ancho: 90%;  --izq: 0;   --giro: -2.8deg; --abajo: 24px; }
+
+@media (max-width: 640px) {
+  .galeria { columns: 2 140px; column-gap: 16px; padding: 8px 4px 0; }
+  .g-item { padding: 5px; }
+  .g-item:nth-child(n) { --giro: 0deg; --izq: 0; --ancho: 100%; --abajo: 18px; }
+  .g-item:nth-child(3n+1) { --giro: -1.4deg; }
+  .g-item:nth-child(3n+2) { --giro: 1.6deg; --ancho: 90%; --izq: 8%; }
+  .g-item:nth-child(3n+3) { --giro: -1deg; --ancho: 94%; }
+}
+@media (prefers-reduced-motion: reduce) { .g-item { transition: none; } .g-item:hover, .g-item:focus-visible { transform: none; } }
 
 /* ---------- Visor de fotos ---------- */
 dialog.lightbox { width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(0, 0, 0, .95); color: var(--texto); }
