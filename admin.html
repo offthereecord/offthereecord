@@ -26,6 +26,21 @@
         <input type="password" id="clave" autocomplete="current-password" required>
         <p id="msgLogin" class="mensaje" role="status"></p>
         <button type="submit" id="btnLogin" class="primario">Entrar</button>
+        <p class="sub" style="margin-top:14px"><button type="button" id="btnOlvide" class="enlace" style="background:none;border:0;padding:0;color:var(--texto-suave);text-decoration:underline;cursor:pointer;font:inherit">Olvidé mi contraseña</button></p>
+      </form>
+    </section>
+
+    <!-- ========== 1b) CONTRASEÑA NUEVA (al entrar desde el mail de recuperación) ========== -->
+    <section id="recuperar" hidden>
+      <h1>Elegí tu contraseña nueva</h1>
+      <p class="sub">Escribila dos veces y listo.</p>
+      <form id="formRecuperar" class="caja">
+        <label for="clave1">Contraseña nueva</label>
+        <input type="password" id="clave1" autocomplete="new-password" minlength="8" required>
+        <label for="clave2">Repetila</label>
+        <input type="password" id="clave2" autocomplete="new-password" minlength="8" required>
+        <p id="msgRecuperar" class="mensaje" role="status"></p>
+        <button type="submit" id="btnRecuperar" class="primario">Guardar contraseña</button>
       </form>
     </section>
 
@@ -399,7 +414,7 @@
   <script src="config.js?v=6"></script>
   <script src="util.js?v=6"></script>
   <script src="redes.js?v=2"></script>
-  <script src="admin.js?v=7"></script>
+  <script src="admin.js?v=8"></script>
   <script src="admin-coberturas.js?v=11"></script>
   <script src="admin-emergentes.js?v=11"></script>
   <script src="admin-efemerides.js?v=10"></script>

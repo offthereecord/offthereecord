@@ -67,7 +67,10 @@
   }
 
   /* ---------- Ingreso / sesión ---------- */
+  let recuperando = /type=recovery/.test(location.hash);   // entró desde el mail de "Olvidé mi contraseña"
+
   async function mostrarSegunSesion(session) {
+    if (recuperando) { $('login').hidden = true; $('panel').hidden = true; $('recuperar').hidden = false; return; }
     const id = session ? session.user.id : null;
     if (iniciado && id === usuarioId) return;       // misma sesión: no hacemos nada
     iniciado = true;
@@ -101,6 +104,32 @@
       $('clave').value = '';
       mensaje($('msgLogin'), '');
     }
+  });
+
+  /* ---------- Olvidé mi contraseña ---------- */
+  $('btnOlvide').addEventListener('click', async () => {
+    const mail = $('email').value.trim();
+    if (!mail) { mensaje($('msgLogin'), 'Escribí tu mail arriba y volvé a tocar «Olvidé mi contraseña».', 'error'); return; }
+    mensaje($('msgLogin'), 'Enviando…');
+    const { error } = await sb.auth.resetPasswordForEmail(mail, { redirectTo: location.origin + location.pathname });
+    mensaje($('msgLogin'), error
+      ? 'No pudimos enviar el mail. Esperá un minuto y probá de nuevo.'
+      : 'Listo. Si ese mail existe, te llegó un link para elegir una contraseña nueva (mirá también en spam).', error ? 'error' : '');
+  });
+
+  $('formRecuperar').addEventListener('submit', async e => {
+    e.preventDefault();
+    if ($('clave1').value !== $('clave2').value) { mensaje($('msgRecuperar'), 'Las dos contraseñas no coinciden.', 'error'); return; }
+    $('btnRecuperar').disabled = true;
+    const { error } = await sb.auth.updateUser({ password: $('clave1').value });
+    $('btnRecuperar').disabled = false;
+    if (error) { mensaje($('msgRecuperar'), 'No se pudo guardar: ' + error.message, 'error'); return; }
+    recuperando = false;
+    history.replaceState(null, '', location.pathname);
+    $('recuperar').hidden = true;
+    iniciado = false;
+    const { data } = await sb.auth.getSession();
+    mostrarSegunSesion(data.session);
   });
 
   $('btnSalir').addEventListener('click', () => sb.auth.signOut());
@@ -321,7 +350,8 @@
     $('categoria').add(new Option(nombre, valor));
   });
 
-  sb.auth.onAuthStateChange((_evento, session) => {
+  sb.auth.onAuthStateChange((evento, session) => {
+    if (evento === 'PASSWORD_RECOVERY') recuperando = true;
     setTimeout(() => mostrarSegunSesion(session), 0);   // recomendado por Supabase
   });
   sb.auth.getSession().then(({ data }) => mostrarSegunSesion(data.session));
