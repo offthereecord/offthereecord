@@ -2,14 +2,24 @@
 /* Ficha de una banda emergente (banda.html?slug=...) */
 (async function () {
   const cont = document.getElementById('banda');
-  const slug = new URLSearchParams(location.search).get('slug');
+  const slug = window.OTR_SLUG || new URLSearchParams(location.search).get('slug');
   const noEsta = () => { cont.innerHTML = '<p class="vacio">No encontramos esa banda.</p>'; };
   if (!slug) return noEsta();
 
   const { data: b, error } = await sb.from('bandas').select('*').eq('slug', slug).maybeSingle();
   if (error || !b) return noEsta();
 
-  document.title = b.nombre + ' · Off The Reecord';
+  const detalleSeo = [b.genero, b.ciudad].filter(Boolean).join(' · ');
+  const descSeo = OTR_SEO.resumen([b.nombre, detalleSeo, b.bio].filter(Boolean).join('. '), 160);
+  OTR_SEO.aplicar({
+    titulo: b.nombre + (detalleSeo ? ' · ' + detalleSeo : ''), descripcion: descSeo, imagen: urlSegura(b.imagen), tipo: 'profile',
+    ruta: 'bandas/' + b.slug + '.html', estatica: 'bandas/' + b.slug + '.html', noindex: !b.publicada,
+    jsonld: b.publicada ? {
+      '@context': 'https://schema.org', '@type': 'MusicGroup', name: b.nombre, description: OTR_SEO.resumen(b.bio, 300) || undefined,
+      ...(urlSegura(b.imagen) ? { image: urlSegura(b.imagen) } : {}), ...(b.genero ? { genre: b.genero } : {}),
+      ...(b.ciudad ? { foundingLocation: { '@type': 'Place', name: b.ciudad } } : {}), url: OTR_SEO.BASE + 'bandas/' + b.slug + '.html'
+    } : null
+  });
   const redes = (b.redes && b.redes.length) ? b.redes : OTR_REDES.desdeLinks(b.links);   // fichas viejas: usan los campos fijos
   const foto = urlSegura(b.imagen);
   const detalle = [b.genero, b.ciudad].filter(Boolean).join(' · ');

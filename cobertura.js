@@ -2,16 +2,27 @@
 /* Una cobertura (cobertura.html?id=...): datos del evento y galería con visor de fotos */
 (async function () {
   const cont = document.getElementById('cobertura');
-  const id = new URLSearchParams(location.search).get('id');
+  const id = window.OTR_ID || new URLSearchParams(location.search).get('id');
   const noEsta = () => { cont.innerHTML = '<p class="vacio">No encontramos esa cobertura.</p>'; };
   if (!id) return noEsta();
 
   const { data: c, error } = await sb.from('coberturas').select('*, notas(slug)').eq('id', id).maybeSingle();
   if (error || !c) return noEsta();
 
-  document.title = c.titulo + ' · Off The Reecord';
   const fotos = (c.fotos && c.fotos.length ? c.fotos : (c.portada ? [c.portada] : [])).map(urlSegura).filter(Boolean);
   const detalle = [c.artista, c.lugar, c.fecha_evento ? fechaDia(c.fecha_evento) : ''].filter(Boolean).join(' · ');
+  const descSeo = OTR_SEO.resumen([detalle, c.descripcion].filter(Boolean).join('. '), 160) || 'Galería de fotos de un recital.';
+  const archivoSeo = location.pathname.includes('/coberturas/') ? location.pathname.split('/').pop() : '';
+  OTR_SEO.aplicar({
+    titulo: c.titulo, descripcion: descSeo, imagen: fotos[0], tipo: 'article', noindex: !c.publicada,
+    ruta: archivoSeo ? 'coberturas/' + archivoSeo : 'cobertura.html?id=' + c.id,
+    jsonld: c.publicada ? {
+      '@context': 'https://schema.org', '@type': 'ImageGallery', name: c.titulo, description: descSeo,
+      ...(c.credito ? { creator: { '@type': 'Person', name: c.credito } } : {}),
+      ...(c.fecha_evento ? { dateCreated: c.fecha_evento } : {}),
+      image: fotos.slice(0, 10).map((u, i) => ({ '@type': 'ImageObject', contentUrl: u, name: 'Foto ' + (i + 1) + ' de ' + c.titulo, ...(c.credito ? { creditText: c.credito } : {}) }))
+    } : null
+  });
   const parrafos = String(c.descripcion || '').split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
     .map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('');
 
@@ -26,7 +37,7 @@
     ${c.notas && c.notas.slug ? `<p><a class="boton" href="nota.html?slug=${encodeURIComponent(c.notas.slug)}">Leer la crónica</a></p>` : ''}
     ${fotos.length ? `<div class="galeria">${fotos.map((u, i) => `
       <button type="button" class="g-item" data-i="${i}" aria-label="Ver la foto ${i + 1} de ${fotos.length}">
-        <img src="${esc(u)}" alt="Foto ${i + 1} de ${esc(c.titulo)}" loading="lazy">
+        <img src="${esc(u)}" alt="${esc('Foto ' + (i + 1) + ' de ' + c.titulo + (c.artista ? ' · ' + c.artista : ''))}" loading="lazy">
       </button>`).join('')}</div>` : '<p class="vacio">Todavía no hay fotos en esta cobertura.</p>'}`;
 
   /* ---------- Visor de fotos (pantalla completa) ---------- */

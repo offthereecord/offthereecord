@@ -32,7 +32,7 @@
   const archivo = location.pathname.split('/').pop() || 'index.html';
   const params = new URLSearchParams(location.search);
   const claveExtra = (archivo === 'nota.html' || archivo === 'banda.html') ? 'slug' : archivo === 'cobertura.html' ? 'id' : '';
-  const RUTA = (archivo + (claveExtra && params.get(claveExtra) ? '?' + claveExtra + '=' + params.get(claveExtra) : '')).slice(0, 200);
+  const RUTA = window.OTR_PAGINA ? String(window.OTR_PAGINA).slice(0, 200) : (archivo + (claveExtra && params.get(claveExtra) ? '?' + claveExtra + '=' + params.get(claveExtra) : '')).slice(0, 200);
 
   function dispositivo() {
     const w = window.innerWidth || 1024;
