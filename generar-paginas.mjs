@@ -28,7 +28,7 @@ const limpiar = html => sanitizeHtml(String(html || ''), {
 });
 
 async function leer(tabla, columnas, orden) {
-  const r = await fetch(`${API}/rest/v1/${tabla}?select=${encodeURIComponent(columnas)}&publicada=eq.true&order=${orden}`,
+  const r = await fetch(`${API}/rest/v1/${tabla}?select=*&publicada=eq.true&order=${orden}`,
     { headers: { apikey: CLAVE, Authorization: 'Bearer ' + CLAVE } });
   if (!r.ok) throw new Error(`No se pudo leer ${tabla}: ${r.status} ${await r.text()}`);
   return r.json();
